@@ -24,7 +24,11 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Sidebar />
-        <div className="pl-64">{children}</div>
+        <div className="pl-64">
+          <main className="min-h-screen bg-[#F8F9FF] pt-8 pb-8 px-4 sm:px-6 lg:px-8"> 
+            {children} 
+          </main>
+        </div>
       </body>
     </html>
   );
