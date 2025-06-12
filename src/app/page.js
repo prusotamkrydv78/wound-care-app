@@ -1,103 +1,124 @@
+import Link from 'next/link';
 import Image from "next/image";
+import { MdShield, MdAnalytics, MdSpeed, MdDevices } from 'react-icons/md';
+import { RiTeamLine, RiFirstAidKitLine } from 'react-icons/ri';
+import LandingWrapper from '@/components/landing/LandingWrapper';
+
+const features = [
+  {
+    icon: RiFirstAidKitLine,
+    title: 'Smart Wound Assessment',
+    description: 'AI-powered wound measurement and analysis for accurate tracking'
+  },
+  {
+    icon: MdAnalytics,
+    title: 'Advanced Analytics',
+    description: 'Comprehensive healing metrics and progress visualization'
+  },
+  {
+    icon: MdShield,
+    title: 'HIPAA Compliant',
+    description: 'Secure, encrypted, and compliant with healthcare standards'
+  },
+  {
+    icon: RiTeamLine,
+    title: 'Team Collaboration',
+    description: 'Seamless communication between healthcare providers'
+  }
+];
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <LandingWrapper>
+      <div className="min-h-screen">
+        {/* Hero Section */}
+        <div className="relative bg-gradient-to-br from-[#6B7AFF] to-[#506EFF] px-6 lg:px-8 py-24 overflow-hidden">
+          <div className="absolute inset-0 bg-grid-white/[0.2] bg-[length:16px_16px]"/>
+          <div className="relative max-w-5xl mx-auto text-center">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+              Transform Your Wound Care Practice
+            </h1>
+            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+              Advanced digital solution for healthcare professionals to streamline wound assessment, 
+              treatment planning, and patient care management.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/auth/register" 
+                    className="bg-white text-[#6B7AFF] px-8 py-3 rounded-xl font-medium 
+                             hover:bg-blue-50 transition-colors">
+                Start Free Trial
+              </Link>
+              <Link href="/auth/login" 
+                    className="bg-white/10 text-white px-8 py-3 rounded-xl font-medium 
+                             hover:bg-white/20 transition-colors">
+                Login
+              </Link>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* Stats Section */}
+        <div className="bg-white py-12">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                ['50k+', 'Healthcare Professionals'],
+                ['2M+', 'Assessments Made'],
+                ['98%', 'Satisfaction Rate'],
+                ['24/7', 'Expert Support']
+              ].map(([stat, label]) => (
+                <div key={stat} className="text-center">
+                  <div className="text-4xl font-bold text-[#1C243C] mb-2">{stat}</div>
+                  <div className="text-[#8F96AA]">{label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Features Grid */}
+        <div className="py-24 bg-[#F8F9FF]">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-[#1C243C] mb-4">
+                Everything You Need for Modern Wound Care
+              </h2>
+              <p className="text-[#8F96AA] max-w-2xl mx-auto">
+                Comprehensive tools and features designed specifically for healthcare professionals
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {features.map((feature, i) => (
+                <div key={i} className="bg-white p-6 rounded-xl border border-[#DDE1EC] hover:border-[#6B7AFF]/20 transition-all">
+                  <div className={`w-12 h-12 rounded-xl bg-[#6B7AFF]/10 flex items-center justify-center mb-4`}>
+                    <feature.icon className="w-6 h-6 text-[#6B7AFF]" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-[#1C243C] mb-2">{feature.title}</h3>
+                  <p className="text-[#8F96AA]">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="bg-white py-24">
+          <div className="max-w-4xl mx-auto text-center px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-[#1C243C] mb-4">
+              Ready to Elevate Your Practice?
+            </h2>
+            <p className="text-[#8F96AA] mb-8">
+              Join thousands of healthcare professionals using WoundCare Pro
+            </p>
+            <Link href="/auth/register" 
+                  className="inline-block bg-gradient-to-r from-[#6B7AFF] to-[#506EFF] 
+                           text-white px-8 py-3 rounded-xl font-medium 
+                           hover:from-[#506EFF] hover:to-[#6B7AFF] transition-all">
+              Get Started Now
+            </Link>
+          </div>
+        </div>
+      </div>
+    </LandingWrapper>
   );
 }

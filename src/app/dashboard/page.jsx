@@ -1,5 +1,3 @@
-'use client';
-import { useState, useEffect } from 'react';
 import { MdTrendingUp, MdCalendarToday, MdPeople, MdMoreVert, MdArrowForward } from 'react-icons/md';
 import { RiFirstAidKitLine, RiPulseLine, RiMessage2Line, RiBookReadLine } from 'react-icons/ri';
 import Link from 'next/link';
