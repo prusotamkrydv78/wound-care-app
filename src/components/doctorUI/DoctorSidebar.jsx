@@ -7,8 +7,8 @@ import { RiFirstAidKitLine, RiMessage2Line, RiBookReadLine, RiUserLine, RiHistor
 import { IoSettingsOutline, IoLogOutOutline } from 'react-icons/io5';
 import { useSidebar } from '@/context/SidebarContext';
 
-const Sidebar = () => {
-    const { isOpen, setIsOpen } = useSidebar();
+const DoctorSidebar = () => {
+    const { isDoctorSidebarOpen, setIsDoctorSidebarOpen } = useSidebar();
     const pathname = usePathname();
     const isLandingPage = pathname === '/';
 
@@ -62,7 +62,7 @@ const Sidebar = () => {
 
     const renderNavItem = (item) => {
         const isActive = pathname === item.href;
-        const isOpen = openMenus[item.name];
+        const isDoctorSidebarOpen = openMenus[item.name];
 
         return (
             <div key={item.name}>
@@ -82,7 +82,7 @@ const Sidebar = () => {
                         </div>
                         {item.submenu && (
                             <MdExpandMore className={`w-4 h-4 transition-transform duration-200 
-                                  text-[#8F96AA] ${isOpen ? 'rotate-180' : ''}`} />
+                                  text-[#8F96AA] ${isDoctorSidebarOpen ? 'rotate-180' : ''}`} />
                         )}
                     </Link>}
                 {item.submenu &&
@@ -101,11 +101,11 @@ const Sidebar = () => {
                         </div>
                         {item.submenu && (
                             <MdExpandMore className={`w-4 h-4 transition-transform duration-200 
-                                  text-[#8F96AA] ${isOpen ? 'rotate-180' : ''}`} />
+                                  text-[#8F96AA] ${isDoctorSidebarOpen ? 'rotate-180' : ''}`} />
                         )}
                     </div>
                 }
-                {item.submenu && isOpen && (
+                {item.submenu && isDoctorSidebarOpen && (
                     <div className="ml-3 mt-1 pl-3 border-l border-[#DDE1EC]">
                         {item.children.map((child) => (
                             <Link
@@ -130,7 +130,7 @@ const Sidebar = () => {
     return (
         <>
             <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-[#DDE1EC] transform transition-transform duration-300 
-                      ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                      ${isDoctorSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 {/* Logo - More Compact */}
                 <div className="flex items-center gap-3 px-4 py-4 border-b border-[#DDE1EC]">
                     <div className="w-8 h-8 bg-gradient-to-br from-[#6B7AFF] to-[#506EFF] rounded-lg 
@@ -172,11 +172,11 @@ const Sidebar = () => {
 
             {/* Toggle Button */}
             <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => setIsDoctorSidebarOpen(!isDoctorSidebarOpen)}
                 className="fixed right-4 top-4 z-50 p-2 rounded-lg bg-white border border-[#DDE1EC] lg:hidden"
             >
                 <svg className="w-6 h-6 text-[#1C243C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    {isOpen ? (
+                    {isDoctorSidebarOpen ? (
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     ) : (
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -187,4 +187,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+export default DoctorSidebar;

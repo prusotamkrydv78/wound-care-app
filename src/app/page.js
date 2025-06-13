@@ -2,8 +2,8 @@ import Link from 'next/link';
 import Image from "next/image";
 import { MdShield, MdAnalytics, MdArrowForward, MdCheck, MdStar } from 'react-icons/md';
 import { RiFirstAidKitLine, RiTeamLine, RiStethoscopeLine, RiHeartPulseLine } from 'react-icons/ri';
-import LandingWrapper from '@/components/landing/LandingWrapper';
-import Footer from '@/components/cUi/Footer';
+ 
+import Footer from '@/components/publicUi/Footer';
 
 const benefits = [
   {
@@ -70,7 +70,7 @@ const features = [
 
 export default function Home() {
   return (
-    <LandingWrapper>
+    <>
       <div className="relative">
         {/* Hero Section */}
         <section className="relative pt-20 pb-32 overflow-hidden">
@@ -278,6 +278,6 @@ export default function Home() {
         </section>
       </div>
       <Footer/>
-    </LandingWrapper>
+    </>
   );
 }
