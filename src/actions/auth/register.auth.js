@@ -48,7 +48,7 @@ const RegisterUser = async (previousState, formData) => {
         );
 
         // 🚪 5. Redirect (must be LAST)
-        redirect(`/auth/otp-verification?token=${token}`);
+        redirect(`/auth/otp-verification?token=${token}&process=register`);
 
     } catch (error) {
         if (isRedirectError(error)) throw error;

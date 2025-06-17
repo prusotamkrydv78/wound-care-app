@@ -7,11 +7,11 @@ import { useSearchParams } from 'next/navigation';
 
 export default function Verifyotp() {
 
-  const [state,formState] = useActionState(VerifyOTP);
+  const [state, formState] = useActionState(VerifyOTP);
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
 
-  
+
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const inputRefs = useRef([]);
   const [timer, setTimer] = useState(30);
@@ -53,7 +53,7 @@ export default function Verifyotp() {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text').slice(0, 6);
     const pastedArray = pastedData.split('').slice(0, 6);
-    
+
     setOtp([...pastedArray, ...new Array(6 - pastedArray.length).fill("")]);
     inputRefs.current[Math.min(pastedArray.length, 5)].focus();
   };
@@ -90,6 +90,7 @@ export default function Verifyotp() {
           <form action={formState} className="w-full">
             <div className="text-gray-600 mb-4">
               <input type="hidden" name="emailToken" value={token} />
+              <input type="hidden" name='process' value={searchParams.get('process')} />
             </div>
             <div className="flex justify-center space-x-3 mb-6">
               {otp.map((digit, idx) => (
@@ -137,8 +138,8 @@ export default function Verifyotp() {
               )}
             </p>
 
-            <Link 
-              href="/auth/login" 
+            <Link
+              href="/auth/login"
               className="text-gray-600 hover:text-gray-700 font-medium"
             >
               ← Back to Login
