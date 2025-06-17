@@ -14,8 +14,7 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true,
-        unique: true
+        required: true, 
     },
     password: {
         type: String,
@@ -42,6 +41,10 @@ const userSchema = new mongoose.Schema({
     isVerify: {
         type: Boolean,
         default: false
+    },
+    otp: {
+        type: String,
+        default: null
     },
     createdAt: {
         type: Date,
