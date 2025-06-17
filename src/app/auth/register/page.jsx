@@ -1,32 +1,20 @@
 'use client';
-import { useState } from 'react';
 import Link from 'next/link';
+import { useFormState } from 'react-dom';
+import RegisterUser from '@/actions/auth/register.auth';
+import { useActionState } from 'react';
 
 export default function Register() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    specialization: '',
-    licenseNumber: '',
-    gender: '',
-    dateOfBirth: '',
-    phoneNumber: '',
-    consent: false,
-  });
+  const [state, formAction] = useActionState(RegisterUser, { error: null });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle registration logic
-  };
+
 
   return (
     <div className="min-h-screen flex overflow-hidden">
       {/* Left Section - Medical Theme */}
       <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 p-6 fixed h-screen">
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
-        
+
         <div className="relative z-10 w-full flex flex-col justify-between h-full">
           {/* Top Section - More Compact */}
           <div className="space-y-4">
@@ -105,7 +93,7 @@ export default function Register() {
 
       {/* Right Section - Registration Form */}
       <div className="w-full lg:w-1/2 lg:ml-[50%] xl:ml-[60%] overflow-y-auto h-screen bg-white">
-        <div className="w-full max-w-md mx-auto p-6 bg-wh">
+        <div className="w-full max-w-md mx-auto p-6 bg-white">
           <div className="flex flex-col items-center mb-6">
             <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl 
                            flex items-center justify-center shadow-lg mb-4">
@@ -114,11 +102,10 @@ export default function Register() {
             <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
             <p className="text-gray-600">Join as a medical professional</p>
           </div>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+          <form action={formAction} className="space-y-4">
+            <div className="grid ">
               <div>
-                <label className="text-gray-700 font-medium block mb-2">First Name</label>
+                <label className="text-gray-700 font-medium block mb-2">Full Name</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -130,26 +117,8 @@ export default function Register() {
                     className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
                              bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
                              transition-all text-gray-900"
-                    placeholder="John"
-                    onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-gray-700 font-medium block mb-2">Last Name</label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
-                             bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
-                             transition-all text-gray-900"
-                    placeholder="Doe"
-                    onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                    placeholder="John Doe"
+                    name='fullName'
                   />
                 </div>
               </div>
@@ -169,7 +138,7 @@ export default function Register() {
                            bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
                            transition-all text-gray-900"
                   placeholder="doctor@hospital.com"
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  name='email'
                 />
               </div>
             </div>
@@ -230,7 +199,7 @@ export default function Register() {
                            bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
                            transition-all text-gray-900"
                   placeholder="••••••••"
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
+                  name='password'
                 />
               </div>
             </div>
@@ -247,13 +216,13 @@ export default function Register() {
                   className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
                            bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
                            transition-all text-gray-900"
-                  onChange={(e) => setFormData({...formData, gender: e.target.value})}
-                  value={formData.gender}
+
+                  name='gender'
                 >
                   <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
             </div>
@@ -271,8 +240,8 @@ export default function Register() {
                   className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
                            bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
                            transition-all text-gray-900"
-                  onChange={(e) => setFormData({...formData, dateOfBirth: e.target.value})}
-                  value={formData.dateOfBirth}
+
+                  name='dateOfBirth'
                 />
               </div>
             </div>
@@ -291,8 +260,7 @@ export default function Register() {
                            bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
                            transition-all text-gray-900"
                   placeholder="(123) 456-7890"
-                  onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
-                  value={formData.phoneNumber}
+                  name='phone'
                 />
               </div>
             </div>
@@ -302,14 +270,17 @@ export default function Register() {
                 <input
                   type="checkbox"
                   className="w-4 h-4 border-2 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
-                  checked={formData.consent}
-                  onChange={(e) => setFormData({...formData, consent: e.target.checked})}
+
+                
+                  name="consent"
                 />
               </div>
               <label className="ml-2 text-sm text-gray-600">
                 I consent to the processing of my personal data and agree to the terms of service and privacy policy
               </label>
             </div>
+          {state?.error && <p className="text-red-500">{state.error}</p>}
+ {state?.success && <p className="text-green-500">{state.success}</p>}
 
             <button
               type="submit"
