@@ -9,7 +9,11 @@ export default function Register() {
     email: '',
     password: '',
     specialization: '',
-    licenseNumber: ''
+    licenseNumber: '',
+    gender: '',
+    dateOfBirth: '',
+    phoneNumber: '',
+    consent: false,
   });
 
   const handleSubmit = (e) => {
@@ -18,9 +22,9 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex overflow-hidden">
       {/* Left Section - Medical Theme */}
-      <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 p-6 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 p-6 fixed h-screen">
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
         
         <div className="relative z-10 w-full flex flex-col justify-between h-full">
@@ -100,8 +104,8 @@ export default function Register() {
       </div>
 
       {/* Right Section - Registration Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 bg-gray-50">
-        <div className="w-full max-w-md">
+      <div className="w-full lg:w-1/2 lg:ml-[50%] xl:ml-[60%] overflow-y-auto h-screen bg-white">
+        <div className="w-full max-w-md mx-auto p-6 bg-wh">
           <div className="flex flex-col items-center mb-6">
             <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl 
                            flex items-center justify-center shadow-lg mb-4">
@@ -170,7 +174,7 @@ export default function Register() {
               </div>
             </div>
 
-            <div>
+            {/* <div>
               <label className="text-gray-700 font-medium block mb-2">Medical Specialization</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -191,9 +195,9 @@ export default function Register() {
                   <option value="dermatologist">Dermatologist</option>
                 </select>
               </div>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <label className="text-gray-700 font-medium block mb-2">License Number</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -210,7 +214,7 @@ export default function Register() {
                   onChange={(e) => setFormData({...formData, licenseNumber: e.target.value})}
                 />
               </div>
-            </div>
+            </div> */}
 
             <div>
               <label className="text-gray-700 font-medium block mb-2">Password</label>
@@ -229,6 +233,82 @@ export default function Register() {
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                 />
               </div>
+            </div>
+
+            <div>
+              <label className="text-gray-700 font-medium block mb-2">Gender</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <select
+                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
+                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
+                           transition-all text-gray-900"
+                  onChange={(e) => setFormData({...formData, gender: e.target.value})}
+                  value={formData.gender}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="text-gray-700 font-medium block mb-2">Date of Birth</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <input
+                  type="date"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
+                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
+                           transition-all text-gray-900"
+                  onChange={(e) => setFormData({...formData, dateOfBirth: e.target.value})}
+                  value={formData.dateOfBirth}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-gray-700 font-medium block mb-2">Phone Number</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
+                <input
+                  type="tel"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
+                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
+                           transition-all text-gray-900"
+                  placeholder="(123) 456-7890"
+                  onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
+                  value={formData.phoneNumber}
+                />
+              </div>
+            </div>
+
+            <div className="flex items-start">
+              <div className="flex items-center h-5">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 border-2 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+                  checked={formData.consent}
+                  onChange={(e) => setFormData({...formData, consent: e.target.checked})}
+                />
+              </div>
+              <label className="ml-2 text-sm text-gray-600">
+                I consent to the processing of my personal data and agree to the terms of service and privacy policy
+              </label>
             </div>
 
             <button

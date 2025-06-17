@@ -1,5 +1,5 @@
-import Footer from '@/components/publicUi/Footer';
-import PublicNavbar from '@/components/publicUI/PublicNavbar';
+import Footer from '@/components/publicUi/Footer'; 
+import PublicNavbar from '@/components/publicUi/PublicNavbar';
 
 export default function LocalLayout({ children }) {
   return (
