@@ -1,25 +1,21 @@
 'use client';
-import { useState } from 'react';
+import { useActionState, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { loginUser } from '@/actions/auth/login.auth';
 
 export default function Login() {
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-  });
+  const [state, formAction] = useActionState(loginUser);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle login logic here
-  };
+
+
 
   return (
     <div className="min-h-screen flex">
       {/* Left Section - Medical Theme */}
       <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 p-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
-        
+
         <div className="relative z-10 w-full flex flex-col justify-between h-full">
           {/* Top Section */}
           <div className="space-y-6">
@@ -113,7 +109,7 @@ export default function Login() {
           </div>
 
           {/* Form - More Compact */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form action={formAction} className="space-y-4">
             <div className="space-y-4">
               <div>
                 <label className="text-gray-700 font-medium block mb-2">Email Address</label>
@@ -129,7 +125,7 @@ export default function Login() {
                              bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
                              transition-all text-gray-900"
                     placeholder="doctor@hospital.com"
-                    onChange={(e) => setCredentials({...credentials, email: e.target.value})}
+                    name='email'
                   />
                 </div>
               </div>
@@ -148,7 +144,7 @@ export default function Login() {
                              bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
                              transition-all text-gray-900"
                     placeholder="Enter your password"
-                    onChange={(e) => setCredentials({...credentials, password: e.target.value})}
+                    name='password'
                   />
                 </div>
               </div>
@@ -156,15 +152,15 @@ export default function Login() {
 
             <div className="flex items-center justify-between">
               <label className="flex items-center">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   className="w-4 h-4 rounded border-2 border-gray-300 
-                           text-blue-500 focus:ring-4 focus:ring-blue-100" 
+                           text-blue-500 focus:ring-4 focus:ring-blue-100"
                 />
                 <span className="ml-2 text-gray-600">Remember me</span>
               </label>
-              <Link 
-                href="/auth/forgot-password" 
+              <Link
+                href="/auth/forgot-password"
                 className="text-blue-600 hover:text-blue-700 font-medium"
               >
                 Forgot password?
