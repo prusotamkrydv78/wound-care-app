@@ -5,9 +5,13 @@ import { VerifyOTP } from '@/actions/auth/verifyOTP';
 
 import { useSearchParams } from 'next/navigation';
 
+import { ResendOTP } from '@/actions/auth/resendOTP.auth';
+
 export default function Verifyotp() {
 
   const [state, formState] = useActionState(VerifyOTP);
+
+  const [resendOTPState, formResendOTPAction] = useActionState(ResendOTP)
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
 
@@ -122,21 +126,26 @@ export default function Verifyotp() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-600 mb-4">
-              Didn't receive the code?{' '}
-              {canResend ? (
-                <button
-                  onClick={handleResend}
-                  className="text-blue-600 hover:text-blue-700 font-medium"
-                >
-                  Resend Code
-                </button>
-              ) : (
-                <span className="text-gray-400">
-                  Resend in {timer}s
-                </span>
-              )}
-            </p>
+            <form action={formResendOTPAction}>
+              <input type="hidden" name="emailToken" value={token} />
+              <input type="hidden" name='process' value={searchParams.get('process')} />
+
+              <p className="text-gray-600 mb-4">
+                Didn't receive the code?{' '}
+                {canResend ? (
+                  <button
+                    onClick={handleResend}
+                    className="text-blue-600 hover:text-blue-700 font-medium"
+                  >
+                    Resend Code
+                  </button>
+                ) : (
+                  <span className="text-gray-400">
+                    Resend in {timer}s
+                  </span>
+                )}
+              </p>
+            </form>
 
             <Link
               href="/auth/login"
