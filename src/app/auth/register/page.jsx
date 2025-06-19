@@ -220,9 +220,31 @@ export default function Register() {
                   name='gender'
                 >
                   <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="text-gray-700 font-medium block mb-2">Role</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <select
+                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
+                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
+                           transition-all text-gray-900"
+
+                  name='role'
+                >
+                  <option value="">Select role</option>
+                  <option value="patient">Patient</option>
+                  <option value="doctor">Doctor</option>
                 </select>
               </div>
             </div>
@@ -271,7 +293,7 @@ export default function Register() {
                   type="checkbox"
                   className="w-4 h-4 border-2 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
 
-                
+
                   name="consent"
                 />
               </div>
@@ -279,8 +301,8 @@ export default function Register() {
                 I consent to the processing of my personal data and agree to the terms of service and privacy policy
               </label>
             </div>
-          {state?.error && <p className="text-red-500">{state.error}</p>}
- {state?.success && <p className="text-green-500">{state.success}</p>}
+            {state?.error && <p className="text-red-500">{state.error}</p>}
+            {state?.success && <p className="text-green-500">{state.success}</p>}
 
             <button
               type="submit"

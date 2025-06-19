@@ -19,6 +19,7 @@ const RegisterUser = async (previousState, formData) => {
         gender: formData.get("gender"),
         dateOfBirth: formData.get("dateOfBirth"),
         consent: formData.get("consent") === "on",
+        role:formData.get("role")
     };
 
     if (!userData.consent) {

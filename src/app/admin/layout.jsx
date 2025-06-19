@@ -1,4 +1,6 @@
 import { getSession } from "@/utils/getSessions";
+import { redirect } from "next/navigation";
+
 
 export default async function AdminLayout({ children }) {
   const session = await getSession()
