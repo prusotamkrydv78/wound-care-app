@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { MdClose, MdMenu, MdArrowForward } from 'react-icons/md';
+import { MdClose, MdMenu, MdArrowForward } from 'react-icons/md'; ;
 
 const navigation = [
   { name: 'Home', href: '/local' },
@@ -19,10 +19,10 @@ const navigation = [
   { name: 'Contact', href: '/local/contact' },
 ];
 
-export default function PublicNavbar() {
+export default function PublicNavbar({session}) {
   const [isOpen, setIsOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState('');
-
+  const [openDropdown, setOpenDropdown] = useState(''); 
+  console.log(!session)
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#DDE1EC]">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,6 +77,8 @@ export default function PublicNavbar() {
           </div>
 
           {/* CTA Buttons */}
+          {
+            !session &&
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
             <Link href="/auth/login" 
                   className="text-[#6B7AFF] px-4 py-2 text-sm font-medium hover:text-[#506EFF]">
@@ -89,7 +91,7 @@ export default function PublicNavbar() {
                 Get Started
                 <MdArrowForward className="inline ml-2 group-hover:translate-x-1 transition-transform"/>
               </button>
-              <div className="absolute hidden group-hover:block top-full right-0 mt-2 w-48 py-2 
+              {/* <div className="absolute hidden group-hover:block top-full right-0 mt-2 w-48 py-2 
                             bg-white rounded-xl shadow-lg border border-[#DDE1EC]">
                 <Link href="/auth/register?type=doctor" 
                       className="block px-4 py-2 text-sm text-[#4A5468] hover:bg-[#F8F9FF] hover:text-[#6B7AFF]">
@@ -103,9 +105,20 @@ export default function PublicNavbar() {
                       className="block px-4 py-2 text-sm text-[#4A5468] hover:bg-[#F8F9FF] hover:text-[#6B7AFF]">
                   Register as Clinic
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
+          }
+          {
+            session &&
+          <div className="hidden lg:flex lg:items-center lg:space-x-4">
+            <Link href="/auth/login" 
+                  className="text-[#6B7AFF] px-4 py-2 text-sm font-medium hover:text-[#506EFF]">
+              Logout
+            </Link> 
+          </div>
+          }
+
 
           {/* Mobile menu button */}
           <button

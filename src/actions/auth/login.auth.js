@@ -5,9 +5,11 @@ import UserModel from "@/models/user.model";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
+import { getSession } from "@/utils/getSessions";
 
 export const loginUser = async (prevState, formData) => {
     try {
+        const session = await getSession()
         connectDb();
         const userData = {
             email: formData.get('email'),
@@ -26,9 +28,14 @@ export const loginUser = async (prevState, formData) => {
             return { success: false, message: "Invalid password. Please try again." };
         }
         console.log("User logged in successfully:", isUserExists.email);
-        redirect("/doctor/dashboard");
-        return { success: true, message: "Login successful", user: isUserExists };
 
+        session.fullName = isUserExists.fullName
+        session.email = isUserExists.email
+        session.role = isUserExists.role
+        session.isVerify = isUserExists.isVerify
+        await session.save()
+
+        redirect("/local");
     } catch (error) {
         if (isRedirectError(error)) throw error;
         console.error("Login failed:", error);
