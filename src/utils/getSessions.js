@@ -13,6 +13,12 @@ const sessionOptions = {
 }
 
 export const getSession = async () => {
-    return await getIronSession(await cookies(), sessionOptions)
-
+    const session = await getIronSession(await cookies(), sessionOptions)
+    if (session.fullName) {
+        session.isLogin = true
+    } else {
+        session.isLogin = false
+    }
+    console.log(session)
+    return session;
 }

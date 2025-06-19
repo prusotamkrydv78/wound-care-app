@@ -33,6 +33,7 @@ export const loginUser = async (prevState, formData) => {
         session.email = isUserExists.email
         session.role = isUserExists.role
         session.isVerify = isUserExists.isVerify
+        session.isLogin = true;
         await session.save()
 
         redirect("/local");

@@ -1,7 +1,8 @@
 'use client';
-import { useState } from 'react';
+import { useActionState, useState } from 'react';
 import Link from 'next/link';
-import { MdClose, MdMenu, MdArrowForward } from 'react-icons/md'; ;
+import { MdClose, MdMenu, MdArrowForward } from 'react-icons/md'; import { Logout } from '@/actions/auth/logout.auth';
+;
 
 const navigation = [
   { name: 'Home', href: '/local' },
@@ -19,9 +20,10 @@ const navigation = [
   { name: 'Contact', href: '/local/contact' },
 ];
 
-export default function PublicNavbar({session}) {
+export default function PublicNavbar({ session }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(''); 
+  const [openDropdown, setOpenDropdown] = useState('');
+  const [logoutFormState, logoutFormAction] = useActionState(Logout)
   console.log(!session)
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#DDE1EC]">
@@ -43,8 +45,8 @@ export default function PublicNavbar({session}) {
           <div className="hidden lg:flex lg:items-center lg:space-x-8">
             {navigation.map((item) => (
               <div key={item.name} className="relative"
-                   onMouseEnter={() => setOpenDropdown(item.name)}
-                   onMouseLeave={() => setOpenDropdown('')}>
+                onMouseEnter={() => setOpenDropdown(item.name)}
+                onMouseLeave={() => setOpenDropdown('')}>
                 {item.children ? (
                   <>
                     <button className="text-[#4A5468] hover:text-[#6B7AFF] px-3 py-2 text-sm font-medium">
@@ -78,20 +80,20 @@ export default function PublicNavbar({session}) {
 
           {/* CTA Buttons */}
           {
-            !session &&
-          <div className="hidden lg:flex lg:items-center lg:space-x-4">
-            <Link href="/auth/login" 
-                  className="text-[#6B7AFF] px-4 py-2 text-sm font-medium hover:text-[#506EFF]">
-              Login
-            </Link>
-            <div className="relative group">
-              <button className="bg-gradient-to-r from-[#6B7AFF] to-[#506EFF] text-white px-4 py-2 
+            !session.isLogin &&
+            <div className="hidden lg:flex lg:items-center lg:space-x-4">
+              <Link href="/auth/login"
+                className="text-[#6B7AFF] px-4 py-2 text-sm font-medium hover:text-[#506EFF]">
+                Login
+              </Link>
+              <div className="relative group">
+                <button className="bg-gradient-to-r from-[#6B7AFF] to-[#506EFF] text-white px-4 py-2 
                                rounded-lg text-sm font-medium hover:shadow-md hover:shadow-blue-500/20 
                                transition-all">
-                Get Started
-                <MdArrowForward className="inline ml-2 group-hover:translate-x-1 transition-transform"/>
-              </button>
-              {/* <div className="absolute hidden group-hover:block top-full right-0 mt-2 w-48 py-2 
+                  Get Started
+                  <MdArrowForward className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                </button>
+                {/* <div className="absolute hidden group-hover:block top-full right-0 mt-2 w-48 py-2 
                             bg-white rounded-xl shadow-lg border border-[#DDE1EC]">
                 <Link href="/auth/register?type=doctor" 
                       className="block px-4 py-2 text-sm text-[#4A5468] hover:bg-[#F8F9FF] hover:text-[#6B7AFF]">
@@ -106,17 +108,20 @@ export default function PublicNavbar({session}) {
                   Register as Clinic
                 </Link>
               </div> */}
+              </div>
             </div>
-          </div>
           }
           {
-            session &&
-          <div className="hidden lg:flex lg:items-center lg:space-x-4">
-            <Link href="/auth/login" 
-                  className="text-[#6B7AFF] px-4 py-2 text-sm font-medium hover:text-[#506EFF]">
-              Logout
-            </Link> 
-          </div>
+            session.isLogin &&
+            <div className="hidden lg:flex lg:items-center lg:space-x-4">
+              <form action={logoutFormAction}>
+
+                <button type='submit'
+                  className="text-[#6B7AFF] px-4 py-2 text-sm font-medium hover:text-[#506EFF] cursor-pointer">
+                  Logout
+                </button>
+              </form>
+            </div>
           }
 
 
@@ -169,11 +174,11 @@ export default function PublicNavbar({session}) {
               ))}
               <div className="pt-4 mt-4 border-t border-[#DDE1EC]">
                 <Link href="/auth/login"
-                      className="block px-4 py-2 text-[#6B7AFF] text-sm font-medium">
+                  className="block px-4 py-2 text-[#6B7AFF] text-sm font-medium">
                   Login
                 </Link>
                 <Link href="/auth/register"
-                      className="block px-4 py-2 text-[#6B7AFF] text-sm font-medium">
+                  className="block px-4 py-2 text-[#6B7AFF] text-sm font-medium">
                   Get Started
                 </Link>
               </div>
