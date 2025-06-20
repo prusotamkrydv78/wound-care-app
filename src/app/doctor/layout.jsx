@@ -6,9 +6,9 @@ import { redirect } from 'next/navigation';
 
 export default async function DoctorLayout({ children }) {
    const session = await getSession()
-      if (session.isLogin == false || session.role != 'doctor') {
-          redirect("/local")
-      }
+    //   if (session.isLogin == false || session.role != 'doctor') {
+    //       redirect("/local")
+    //   }
     return (
         <SidebarProvider>
             <DoctorSidebar />
