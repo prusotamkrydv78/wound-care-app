@@ -102,24 +102,32 @@ export default function Pricing() {
   return (
     <main className="bg-white">
       {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden bg-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#F8F9FF] via-white to-[#F0F4FF]"/>
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"/>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-[#6B7AFF]/10 backdrop-blur-sm mb-8">
-              <span className="flex h-2 w-2 rounded-full bg-[#56E0A0] mr-2"/>
-              <span className="text-sm text-[#6B7AFF] font-medium">Pricing Plans</span>
+      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-[#FAFBFF] via-white to-[#F8F9FF]">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02]"/>
+
+        {/* Floating elements */}
+        <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-[#6B7AFF]/10 to-[#8B6DFF]/10 rounded-full blur-xl"></div>
+        <div className="absolute top-40 right-20 w-32 h-32 bg-gradient-to-br from-[#56E0A0]/10 to-[#5698FF]/10 rounded-full blur-xl"></div>
+
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center max-w-5xl mx-auto">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-[#6B7AFF]/10 via-[#8B6DFF]/10 to-[#5698FF]/10 backdrop-blur-sm mb-8 border border-[#6B7AFF]/20">
+              <span className="flex h-2 w-2 rounded-full bg-[#56E0A0] mr-3 animate-pulse"/>
+              <span className="text-sm text-[#6B7AFF] font-semibold">Clinical Pricing Plans</span>
             </div>
-            <h1 className="text-5xl lg:text-7xl font-bold text-[#1C243C] mb-8 leading-tight">
-              Find the Right Plan for <br/>
-              <span className="bg-gradient-to-r from-[#6B7AFF] to-[#8B6DFF] bg-clip-text text-transparent">
-                Your Organization
-              </span>
+
+            <h1 className="text-6xl lg:text-8xl font-bold text-[#1C243C] mb-8 leading-[0.9] tracking-tight">
+              Find the Right Plan <br/>
+              <span className="bg-gradient-to-r from-[#6B7AFF] via-[#8B6DFF] to-[#5698FF] bg-clip-text text-transparent">
+                for Your
+              </span> <br/>
+              <span className="text-5xl lg:text-6xl text-[#8F96AA]">Organization</span>
             </h1>
-            <p className="text-xl text-[#8F96AA] mb-12 leading-relaxed max-w-3xl mx-auto">
-              Choose the perfect clinical plan for your healthcare practice. All plans include our FDA-cleared AI technology,
-              HIPAA-compliant infrastructure, and 24/7 clinical support - with scalable options for every healthcare setting.
+
+            <p className="text-xl lg:text-2xl text-[#8F96AA] mb-12 leading-relaxed max-w-4xl mx-auto font-light">
+              Choose the perfect clinical plan for your healthcare practice. All plans include our
+              <span className="text-[#6B7AFF] font-semibold"> FDA-cleared AI technology</span>,
+              HIPAA-compliant infrastructure, and <span className="text-[#56E0A0] font-semibold">24/7 clinical support</span>.
             </p>
           </div>
         </div>

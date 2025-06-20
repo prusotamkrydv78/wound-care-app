@@ -67,37 +67,49 @@ export default function About() {
   return (
     <main className="bg-white">
       {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden bg-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#F8F9FF] via-white to-[#F0F4FF]"/>
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"/>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-[#6B7AFF]/10 backdrop-blur-sm mb-8">
-              <span className="flex h-2 w-2 rounded-full bg-[#56E0A0] mr-2"/>
-              <span className="text-sm text-[#6B7AFF] font-medium">About WoundCare AI</span>
+      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-[#FAFBFF] via-white to-[#F8F9FF]">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02]"/>
+
+        {/* Floating elements */}
+        <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-[#6B7AFF]/10 to-[#8B6DFF]/10 rounded-full blur-xl"></div>
+        <div className="absolute top-40 right-20 w-32 h-32 bg-gradient-to-br from-[#56E0A0]/10 to-[#5698FF]/10 rounded-full blur-xl"></div>
+
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center max-w-5xl mx-auto">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-[#6B7AFF]/10 via-[#8B6DFF]/10 to-[#5698FF]/10 backdrop-blur-sm mb-8 border border-[#6B7AFF]/20">
+              <span className="flex h-2 w-2 rounded-full bg-[#56E0A0] mr-3 animate-pulse"/>
+              <span className="text-sm text-[#6B7AFF] font-semibold">About WoundCare AI</span>
             </div>
-            <h1 className="text-5xl lg:text-7xl font-bold text-[#1C243C] mb-8 leading-tight">
+
+            <h1 className="text-6xl lg:text-8xl font-bold text-[#1C243C] mb-8 leading-[0.9] tracking-tight">
               Revolutionizing <br/>
-              <span className="bg-gradient-to-r from-[#6B7AFF] to-[#8B6DFF] bg-clip-text text-transparent">
-                Healthcare Technology
-              </span>
+              <span className="bg-gradient-to-r from-[#6B7AFF] via-[#8B6DFF] to-[#5698FF] bg-clip-text text-transparent">
+                Healthcare
+              </span> <br/>
+              <span className="text-5xl lg:text-6xl text-[#8F96AA]">Technology</span>
             </h1>
-            <p className="text-xl text-[#8F96AA] mb-12 leading-relaxed max-w-3xl mx-auto">
-              Founded by leading clinicians and AI researchers, we're revolutionizing wound care through FDA-cleared
-              artificial intelligence that delivers clinical-grade accuracy, reduces documentation burden, and
-              improves patient outcomes across 15+ medical specialties.
+
+            <p className="text-xl lg:text-2xl text-[#8F96AA] mb-12 leading-relaxed max-w-4xl mx-auto font-light">
+              Founded by leading clinicians and AI researchers, we're revolutionizing wound care through
+              <span className="text-[#6B7AFF] font-semibold"> FDA-cleared artificial intelligence</span> that delivers
+              clinical-grade accuracy and improves patient outcomes across <span className="text-[#56E0A0] font-semibold">15+ medical specialties</span>.
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4 mb-16">
+            <div className="flex flex-wrap justify-center gap-6 mb-20">
               <Link href="/auth/register"
-                    className="group bg-[#1C243C] text-white px-8 py-4 rounded-xl font-medium
-                             hover:bg-[#2A3441] hover:shadow-xl transition-all">
+                    className="group bg-gradient-to-r from-[#6B7AFF] via-[#8B6DFF] to-[#5698FF] text-white
+                             px-10 py-5 rounded-2xl font-semibold text-lg hover:shadow-2xl
+                             hover:shadow-[#6B7AFF]/25 transition-all duration-300 hover:scale-105
+                             flex items-center gap-3">
+                <RiStethoscopeLine className="text-xl"/>
                 Join Our Mission
-                <MdArrowForward className="inline ml-2 group-hover:translate-x-1 transition-transform"/>
+                <MdArrowForward className="group-hover:translate-x-1 transition-transform duration-200"/>
               </Link>
               <Link href="/local/contact"
-                    className="px-8 py-4 rounded-xl text-[#1C243C] border border-[#DDE1EC]
-                             hover:bg-[#F8F9FF] transition-all">
+                    className="px-10 py-5 rounded-2xl text-[#1C243C] border-2 border-[#DDE1EC] font-semibold text-lg
+                             hover:bg-[#F8F9FF] hover:border-[#6B7AFF]/30 transition-all duration-300
+                             hover:shadow-lg flex items-center gap-3">
+                <MdPlayArrow className="text-xl"/>
                 Contact Us
               </Link>
             </div>
