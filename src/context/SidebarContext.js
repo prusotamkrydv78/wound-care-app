@@ -6,13 +6,16 @@ const SidebarContext = createContext({});
 export function SidebarProvider({ children }) {
   const [isDoctorSidebarOpen, setIsDoctorSidebarOpen] = useState(true);
   const [isPatientSidebarOpen, setIsPatientSidebarOpen] = useState(true);
+  const [isAdminSidebarOpen, setIsAdminSidebarOpen] = useState(true);
 
   return (
     <SidebarContext.Provider value={{
       isDoctorSidebarOpen,
       setIsDoctorSidebarOpen,
       isPatientSidebarOpen,
-      setIsPatientSidebarOpen
+      setIsPatientSidebarOpen,
+      isAdminSidebarOpen,
+      setIsAdminSidebarOpen
     }}>
       {children}
     </SidebarContext.Provider>
