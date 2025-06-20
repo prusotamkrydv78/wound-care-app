@@ -87,10 +87,10 @@ export default function PublicNavbar({ session }) {
                 Login
               </Link>
               <div className="relative group">
-                <button className="bg-gradient-to-r from-[#6B7AFF] to-[#506EFF] text-white px-4 py-2 
-                               rounded-lg text-sm font-medium hover:shadow-md hover:shadow-blue-500/20 
+                <button className="bg-gradient-to-r from-[#6B7AFF] to-[#506EFF] text-white px-4 py-2
+                               rounded-lg text-sm font-medium hover:shadow-md hover:shadow-blue-500/20
                                transition-all">
-                  Get Started
+                  Start Clinical Trial
                   <MdArrowForward className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                 </button>
                 {/* <div className="absolute hidden group-hover:block top-full right-0 mt-2 w-48 py-2 
@@ -179,7 +179,7 @@ export default function PublicNavbar({ session }) {
                 </Link>
                 <Link href="/auth/register"
                   className="block px-4 py-2 text-[#6B7AFF] text-sm font-medium">
-                  Get Started
+                  Start Clinical Trial
                 </Link>
               </div>
             </div>
