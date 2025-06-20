@@ -3,63 +3,70 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MdDashboard, MdCalendarMonth, MdNotifications, MdExpandMore, MdOutlineAnalytics } from 'react-icons/md';
-import { RiFirstAidKitLine, RiMessage2Line, RiBookReadLine, RiUserLine, RiHistoryLine, RiTeamLine } from 'react-icons/ri';
-import { IoSettingsOutline, IoLogOutOutline } from 'react-icons/io5';
+import { RiFirstAidKitLine, RiMessage2Line, RiBookReadLine, RiUserLine, RiHistoryLine, RiHeartPulseLine, RiCameraLine } from 'react-icons/ri';
+import { IoSettingsOutline, IoLogOutOutline, IoShieldCheckmarkOutline } from 'react-icons/io5';
 import { useSidebar } from '@/context/SidebarContext';
 
-const DoctorSidebar = () => {
-  const { isDoctorSidebarOpen, setIsDoctorSidebarOpen } = useSidebar();
+const PatientSidebar = () => {
   const pathname = usePathname();
-  const isLandingPage = pathname === '/';
-
+  const { isPatientSidebarOpen, setIsPatientSidebarOpen } = useSidebar();
   const [openMenus, setOpenMenus] = useState({});
 
-  const toggleMenu = (key) => {
-    setOpenMenus((prev) => ({ ...prev, [key]: !prev[key] }));
+  const isLandingPage = pathname === '/' || pathname.startsWith('/auth') || pathname.startsWith('/local');
+
+  const toggleMenu = (menuName) => {
+    setOpenMenus(prev => ({
+      ...prev,
+      [menuName]: !prev[menuName]
+    }));
   };
 
   const navigation = [ 
     {
         title: 'MAIN',
         items: [
-            { name: 'Dashboard', icon: MdDashboard, href: '/doctor/dashboard' },
-            { name: 'Analytics', icon: MdOutlineAnalytics, href: '/doctor/analytics' },
+            { name: 'Dashboard', icon: MdDashboard, href: '/patient/dashboard' },
+            { name: 'My Progress', icon: MdOutlineAnalytics, href: '/patient/progress' },
         ]
     },
     {
-        title: 'PATIENT CARE',
+        title: 'WOUND CARE',
         items: [
             {
-                name: 'Wound Management',
+                name: 'Wound Tracking',
                 icon: RiFirstAidKitLine,
                 submenu: true,
-                href: '/doctor/wound-tracker',
+                href: '/patient/wound-tracker',
                 children: [
-                    { name: 'Active Cases', href: '/doctor/wound-tracker/active' },
-                    { name: 'Assessment', href: '/doctor/wound-tracker/assessment' },
-                    { name: 'Treatment Plans', href: '/doctor/wound-tracker/treatment' },
+                    { name: 'Photo Upload', href: '/patient/wound-tracker/upload' },
+                    { name: 'Progress Timeline', href: '/patient/wound-tracker/timeline' },
+                    { name: 'Measurements', href: '/patient/wound-tracker/measurements' },
                 ]
             },
-            { name: 'Appointments', icon: MdCalendarMonth, href: '/doctor/calendar' },
-            { name: 'Patient Records', icon: RiTeamLine, href: '/doctor/patients' },
+            { name: 'Care Instructions', icon: RiHeartPulseLine, href: '/patient/care-instructions' },
+        ]
+    },
+    {
+        title: 'APPOINTMENTS',
+        items: [
+            { name: 'My Appointments', icon: MdCalendarMonth, href: '/patient/appointments' },
+            { name: 'Schedule New', icon: MdCalendarMonth, href: '/patient/appointments/schedule' },
         ]
     },
     {
         title: 'COMMUNICATION',
         items: [
-            { name: 'Messages', icon: RiMessage2Line, href: '/doctor/messages' },
-            { name: 'Notifications', icon: MdNotifications, href: '/doctor/notifications' },
+            { name: 'Messages', icon: RiMessage2Line, href: '/patient/messages' },
+            { name: 'Notifications', icon: MdNotifications, href: '/patient/notifications' },
         ]
     },
     {
         title: 'RESOURCES',
         items: [
-            { name: 'Education', icon: RiBookReadLine, href: '/doctor/education' },
-            { name: 'Activity Log', icon: RiHistoryLine, href: '/doctor/activity' },
+            { name: 'Education Center', icon: RiBookReadLine, href: '/patient/education' },
+            { name: 'Health Profile', icon: RiUserLine, href: '/patient/profile' },
         ]
     },
-    
-
   ];
 
   const renderNavItem = (item) => {
@@ -123,7 +130,7 @@ const DoctorSidebar = () => {
     <>
       <div
         className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-[#DDE1EC] transform transition-transform duration-300 ${
-          isDoctorSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          isPatientSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Logo */}
@@ -155,12 +162,12 @@ const DoctorSidebar = () => {
               <div className="w-8 h-8 rounded-lg bg-[#6B7AFF]/10 flex items-center justify-center">
                 <RiUserLine className="w-4 h-4 text-[#6B7AFF]" />
               </div>
-              <Link href='/doctor/profile' className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-[#1C243C] truncate">Dr. John Doe</p>
-                <p className="text-xs text-[#8F96AA] truncate">Specialist</p>
+              <Link href='/patient/profile' className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-[#1C243C] truncate">John Smith</p>
+                <p className="text-xs text-[#8F96AA] truncate">Patient</p>
               </Link>
-              <Link href="/doctor/settings">
-              <IoSettingsOutline className="w-4 h-4 text-[#8F96AA] hover:text-[#6B7AFF]" />
+              <Link href="/patient/settings">
+                <IoSettingsOutline className="w-4 h-4 text-[#8F96AA] hover:text-[#6B7AFF]" />
               </Link>
             </div>
           </div>
@@ -169,11 +176,11 @@ const DoctorSidebar = () => {
 
       {/* Toggle Button */}
       <button
-        onClick={() => setIsDoctorSidebarOpen(!isDoctorSidebarOpen)}
+        onClick={() => setIsPatientSidebarOpen(!isPatientSidebarOpen)}
         className="fixed right-4 top-4 z-50 p-2 rounded-lg bg-white border border-[#DDE1EC] lg:hidden"
       >
         <svg className="w-6 h-6 text-[#1C243C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          {isDoctorSidebarOpen ? (
+          {isPatientSidebarOpen ? (
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           ) : (
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -184,4 +191,4 @@ const DoctorSidebar = () => {
   );
 };
 
-export default DoctorSidebar;
+export default PatientSidebar;

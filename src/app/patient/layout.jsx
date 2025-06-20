@@ -1,10 +1,18 @@
-import { getSession } from "@/utils/getSessions";
+import { SidebarProvider } from '@/context/SidebarContext';
+import PatientSidebar from '@/components/patientUI/PatientSidebar';
+import PatientWrapper from '@/components/patientUI/PatientWrapper';
+import { getSession } from '@/utils/getSessions';
+import { redirect } from 'next/navigation';
 
-import { redirect } from "next/navigation";
 export default async function PatientLayout({ children }) {
    const session = await getSession()
       if (session.isLogin == false || session.role != 'patient') {
           redirect("/local")
       }
-  return <div>{children}</div>;
+    return (
+        <SidebarProvider>
+            <PatientSidebar />
+            <PatientWrapper>{children}</PatientWrapper>
+        </SidebarProvider>
+    );
 }
