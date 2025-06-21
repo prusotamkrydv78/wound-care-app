@@ -1,328 +1,620 @@
 'use client';
 import Link from 'next/link';
-import { useFormState } from 'react-dom';
+import { useActionState, useState } from 'react';
 import RegisterUser from '@/actions/auth/register.auth';
-import { useActionState } from 'react';
+import { MdPerson, MdEmail, MdPhone, MdLock, MdVisibility, MdVisibilityOff, MdArrowForward, MdArrowBack, MdCheck, MdSecurity, MdSpeed, MdVerifiedUser, MdCalendarToday, MdWc } from 'react-icons/md';
 
 export default function Register() {
   const [state, formAction] = useActionState(RegisterUser, { error: null });
+  const [currentStep, setCurrentStep] = useState(1);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
+  // Mock form data for demo
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+    gender: '',
+    dateOfBirth: '',
+    role: '',
+    termsAccepted: false,
+    marketingConsent: false
+  });
 
+  const steps = [
+    { id: 1, title: 'Personal Info', description: 'Basic details' },
+    { id: 2, title: 'Account Setup', description: 'Security & preferences' },
+    { id: 3, title: 'Verification', description: 'Complete registration' }
+  ];
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  const nextStep = () => {
+    if (currentStep < steps.length) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // Simulate loading for demo
+    setTimeout(() => setIsLoading(false), 2000);
+  };
 
   return (
-    <div className="min-h-screen flex overflow-hidden">
-      {/* Left Section - Medical Theme */}
-      <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 p-6 fixed h-screen">
-        <div className="absolute inset-0 bg-pattern opacity-10"></div>
+    <div className="min-h-screen flex overflow-hidden bg-gradient-to-br from-gray-50 to-white">
+      {/* Left Section - Enhanced AssistIQ Theme */}
+      <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 bg-gradient-to-br from-[#56E0A0] via-[#4ECDC4] to-[#45B7D1] p-8 relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+        </div>
 
-        <div className="relative z-10 w-full flex flex-col justify-between h-full">
-          {/* Top Section - More Compact */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              {/* Logo */}
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-xl font-bold">+</span>
-                </div>
-                <h2 className="text-white text-lg font-bold">WoundCare Pro</h2>
-              </div>
-              {/* Trust Badges */}
-              <div className="flex items-center space-x-2">
-                <span className="px-3 py-1 bg-white/10 rounded-full text-xs text-white">HIPAA Compliant</span>
-                <span className="px-3 py-1 bg-white/10 rounded-full text-xs text-white">FDA Registered</span>
-              </div>
+        <div className="relative z-10 w-full flex flex-col justify-center max-w-lg mx-auto text-white">
+          {/* Enhanced Logo */}
+          <div className="flex items-center space-x-4 mb-12 group">
+            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center
+                           shadow-2xl border border-white/20 transform group-hover:scale-105 transition-all duration-500
+                           group-hover:rotate-3 group-hover:shadow-3xl">
+              <span className="text-white text-3xl font-bold">A</span>
             </div>
-
-            <div className="pt-2">
-              <h1 className="text-3xl font-bold text-white">Join Our Medical Network</h1>
-              <p className="text-blue-100 text-base mt-2">Advanced wound care management platform for healthcare professionals</p>
-            </div>
-
-            {/* Quick Stats - Compact Row */}
-            <div className="flex space-x-4 py-3">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 rounded-full bg-green-400"></div>
-                <span className="text-white text-sm">2000+ Active Users</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
-                <span className="text-white text-sm">50+ Hospitals</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 rounded-full bg-pink-400"></div>
-                <span className="text-white text-sm">24/7 Support</span>
-              </div>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
+                AssistIQ
+              </h1>
+              <p className="text-white/70 text-lg font-medium">AI-Powered Professional Platform</p>
             </div>
           </div>
 
-          {/* Middle Section - Features Grid */}
-          <div className="grid grid-cols-2 gap-3 py-4">
-            {[
-              { icon: '🏥', title: 'Smart Care', desc: 'AI-powered diagnostics' },
-              { icon: '📊', title: 'Analytics', desc: 'Real-time insights' },
-              { icon: '🔒', title: 'Security', desc: 'End-to-end encryption' },
-              { icon: '👥', title: 'Team Work', desc: 'Collaborative care' },
-              { icon: '📱', title: 'Mobile App', desc: 'Work on the go' },
-              { icon: '🎓', title: 'Training', desc: 'Continuous learning' }
-            ].map((feature, i) => (
-              <div key={i} className="bg-white/10 p-3 rounded-lg backdrop-blur-sm">
-                <div className="flex items-center space-x-2">
-                  <span className="text-xl">{feature.icon}</span>
+          {/* Hero Content */}
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-5xl font-bold mb-6 leading-tight">
+                Join the Future of
+                <span className="block bg-gradient-to-r from-white via-white/95 to-white/90 bg-clip-text text-transparent">
+                  Professional Work
+                </span>
+              </h2>
+              <p className="text-white/80 text-xl leading-relaxed">
+                Create your account and unlock the power of AI-driven productivity tools
+                designed for modern professionals.
+              </p>
+            </div>
+
+            {/* Enhanced Features Grid */}
+            <div className="grid grid-cols-1 gap-6 mt-12">
+              <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20
+                             hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                <div className="flex items-center space-x-4 mb-4">
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center
+                                 group-hover:scale-110 transition-transform duration-300">
+                    <MdSecurity className="w-6 h-6 text-white" />
+                  </div>
                   <div>
-                    <h3 className="text-white text-sm font-semibold">{feature.title}</h3>
-                    <p className="text-blue-100 text-xs">{feature.desc}</p>
+                    <h3 className="text-white font-bold text-lg">Secure Registration</h3>
+                    <p className="text-white/70 text-sm">Enterprise-grade data protection</p>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Bottom Section - Compact Social Proof */}
-          <div className="flex items-center justify-between bg-white/10 p-3 rounded-lg backdrop-blur-sm">
-            <div className="flex -space-x-3">
-              {[1, 2, 3, 4].map((_, i) => (
-                <div key={i} className="w-8 h-8 rounded-full border-2 border-white/20 bg-blue-400"></div>
-              ))}
+              <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20
+                             hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                <div className="flex items-center space-x-4 mb-4">
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center
+                                 group-hover:scale-110 transition-transform duration-300">
+                    <MdSpeed className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-lg">Quick Setup</h3>
+                    <p className="text-white/70 text-sm">Get started in under 3 minutes</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20
+                             hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                <div className="flex items-center space-x-4 mb-4">
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center
+                                 group-hover:scale-110 transition-transform duration-300">
+                    <MdVerifiedUser className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-lg">Instant Access</h3>
+                    <p className="text-white/70 text-sm">Start using AI tools immediately</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p className="text-white text-sm">
-              <span className="font-semibold">500+</span> medical professionals joined this month
-            </p>
+
+            {/* Enhanced Statistics */}
+            <div className="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-white/20">
+              <div className="text-center group">
+                <div className="text-3xl font-bold text-white mb-1 group-hover:scale-110 transition-transform duration-300">50K+</div>
+                <div className="text-white/70 text-sm">Professionals</div>
+              </div>
+              <div className="text-center group">
+                <div className="text-3xl font-bold text-white mb-1 group-hover:scale-110 transition-transform duration-300">99.9%</div>
+                <div className="text-white/70 text-sm">Uptime</div>
+              </div>
+              <div className="text-center group">
+                <div className="text-3xl font-bold text-white mb-1 group-hover:scale-110 transition-transform duration-300">24/7</div>
+                <div className="text-white/70 text-sm">Support</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Right Section - Registration Form */}
-      <div className="w-full lg:w-1/2 lg:ml-[50%] xl:ml-[60%] overflow-y-auto h-screen bg-white">
-        <div className="w-full max-w-md mx-auto p-6 bg-white">
-          <div className="flex flex-col items-center mb-6">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl 
-                           flex items-center justify-center shadow-lg mb-4">
-              <span className="text-white text-2xl font-bold">+</span>
+      {/* Right Section - Enhanced Registration Form */}
+      <div className="w-full lg:w-1/2   overflow-y-auto min-h-screen bg-white relative">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 to-white"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#56E0A0]/5 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-[#4ECDC4]/5 to-transparent rounded-full blur-3xl"></div>
+
+        <div className="w-full max-w-lg mx-auto p-8 relative z-10">
+          {/* Enhanced Header */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#56E0A0] to-[#4ECDC4]
+                           rounded-2xl shadow-2xl mb-6 transform hover:scale-105 transition-all duration-300
+                           hover:shadow-3xl hover:rotate-3">
+              <span className="text-white text-2xl font-bold">A</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
-            <p className="text-gray-600">Join as a medical professional</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Your Account</h1>
+            <p className="text-gray-600 text-lg">Join thousands of professionals using AI</p>
           </div>
-          <form action={formAction} className="space-y-4">
-            <div className="grid ">
-              <div>
-                <label className="text-gray-700 font-medium block mb-2">Full Name</label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
+
+          {/* Step Indicator */}
+          <div className="flex items-center justify-center mb-8">
+            {steps.map((step, index) => (
+              <div key={step.id} className="flex items-center">
+                <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-300
+                  ${currentStep >= step.id
+                    ? 'bg-[#56E0A0] border-[#56E0A0] text-white shadow-lg'
+                    : 'border-gray-300 text-gray-400 bg-white'}`}>
+                  {currentStep > step.id ? (
+                    <MdCheck className="w-5 h-5" />
+                  ) : (
+                    <span className="text-sm font-medium">{step.id}</span>
+                  )}
+                </div>
+                {index < steps.length - 1 && (
+                  <div className={`w-16 h-0.5 mx-2 transition-all duration-300
+                    ${currentStep > step.id ? 'bg-[#56E0A0]' : 'bg-gray-300'}`} />
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Step Title */}
+          <div className="text-center mb-8">
+            <h2 className="text-xl font-semibold text-gray-900">{steps[currentStep - 1]?.title}</h2>
+            <p className="text-gray-600">{steps[currentStep - 1]?.description}</p>
+          </div>
+          {/* Enhanced Multi-Step Form */}
+          <form action={formAction} onSubmit={handleSubmit} className="space-y-6">
+            {state?.error && (
+              <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
+                <p className="text-red-600 text-sm font-medium">{state.error}</p>
+              </div>
+            )}
+
+            {/* Step 1: Personal Info */}
+            {currentStep === 1 && (
+              <div className="space-y-5">
+                <div className="group">
+                  <label className="text-gray-700 font-semibold block mb-3 text-sm uppercase tracking-wide">
+                    Full Name
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none
+                                   group-focus-within:text-[#56E0A0] transition-colors duration-200">
+                      <MdPerson className="h-5 w-5 text-gray-400 group-focus-within:text-[#56E0A0]" />
+                    </div>
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-gray-200
+                               bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10
+                               transition-all duration-300 text-gray-900 placeholder-gray-400
+                               hover:border-gray-300 focus:outline-none text-lg"
+                      placeholder="Enter your full name"
+                      required
+                    />
                   </div>
-                  <input
-                    type="text"
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
-                             bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
-                             transition-all text-gray-900"
-                    placeholder="John Doe"
-                    name='fullName'
-                  />
+                </div>
+
+                <div className="group">
+                  <label className="text-gray-700 font-semibold block mb-3 text-sm uppercase tracking-wide">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none
+                                   group-focus-within:text-[#56E0A0] transition-colors duration-200">
+                      <MdEmail className="h-5 w-5 text-gray-400 group-focus-within:text-[#56E0A0]" />
+                    </div>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-gray-200
+                               bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10
+                               transition-all duration-300 text-gray-900 placeholder-gray-400
+                               hover:border-gray-300 focus:outline-none text-lg"
+                      placeholder="Enter your email address"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="group">
+                  <label className="text-gray-700 font-semibold block mb-3 text-sm uppercase tracking-wide">
+                    Phone Number
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none
+                                   group-focus-within:text-[#56E0A0] transition-colors duration-200">
+                      <MdPhone className="h-5 w-5 text-gray-400 group-focus-within:text-[#56E0A0]" />
+                    </div>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-gray-200
+                               bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10
+                               transition-all duration-300 text-gray-900 placeholder-gray-400
+                               hover:border-gray-300 focus:outline-none text-lg"
+                      placeholder="(123) 456-7890"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="group">
+                    <label className="text-gray-700 font-semibold block mb-3 text-sm uppercase tracking-wide">
+                      Date of Birth
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none
+                                     group-focus-within:text-[#56E0A0] transition-colors duration-200">
+                        <MdCalendarToday className="h-5 w-5 text-gray-400 group-focus-within:text-[#56E0A0]" />
+                      </div>
+                      <input
+                        type="date"
+                        name="dateOfBirth"
+                        value={formData.dateOfBirth}
+                        onChange={handleInputChange}
+                        className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-gray-200
+                                 bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10
+                                 transition-all duration-300 text-gray-900
+                                 hover:border-gray-300 focus:outline-none text-lg"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="group">
+                    <label className="text-gray-700 font-semibold block mb-3 text-sm uppercase tracking-wide">
+                      Gender
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none
+                                     group-focus-within:text-[#56E0A0] transition-colors duration-200">
+                        <MdWc className="h-5 w-5 text-gray-400 group-focus-within:text-[#56E0A0]" />
+                      </div>
+                      <select
+                        name="gender"
+                        value={formData.gender}
+                        onChange={handleInputChange}
+                        className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-gray-200
+                                 bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10
+                                 transition-all duration-300 text-gray-900
+                                 hover:border-gray-300 focus:outline-none text-lg"
+                        required
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            <div>
-              <label className="text-gray-700 font-medium block mb-2">Email Address</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                  </svg>
+            {/* Step 2: Account Setup */}
+            {currentStep === 2 && (
+              <div className="space-y-5">
+                <div className="group">
+                  <label className="text-gray-700 font-semibold block mb-3 text-sm uppercase tracking-wide">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none
+                                   group-focus-within:text-[#56E0A0] transition-colors duration-200">
+                      <MdLock className="h-5 w-5 text-gray-400 group-focus-within:text-[#56E0A0]" />
+                    </div>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      className="w-full pl-12 pr-12 py-4 rounded-xl border-2 border-gray-200
+                               bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10
+                               transition-all duration-300 text-gray-900 placeholder-gray-400
+                               hover:border-gray-300 focus:outline-none text-lg"
+                      placeholder="Create a strong password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400
+                               hover:text-gray-600 transition-colors duration-200"
+                    >
+                      {showPassword ? (
+                        <MdVisibilityOff className="h-5 w-5" />
+                      ) : (
+                        <MdVisibility className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
                 </div>
-                <input
-                  type="email"
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
-                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
-                           transition-all text-gray-900"
-                  placeholder="doctor@hospital.com"
-                  name='email'
-                />
+
+                <div className="group">
+                  <label className="text-gray-700 font-semibold block mb-3 text-sm uppercase tracking-wide">
+                    Confirm Password
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none
+                                   group-focus-within:text-[#56E0A0] transition-colors duration-200">
+                      <MdLock className="h-5 w-5 text-gray-400 group-focus-within:text-[#56E0A0]" />
+                    </div>
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleInputChange}
+                      className="w-full pl-12 pr-12 py-4 rounded-xl border-2 border-gray-200
+                               bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10
+                               transition-all duration-300 text-gray-900 placeholder-gray-400
+                               hover:border-gray-300 focus:outline-none text-lg"
+                      placeholder="Confirm your password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400
+                               hover:text-gray-600 transition-colors duration-200"
+                    >
+                      {showConfirmPassword ? (
+                        <MdVisibilityOff className="h-5 w-5" />
+                      ) : (
+                        <MdVisibility className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="group">
+                  <label className="text-gray-700 font-semibold block mb-3 text-sm uppercase tracking-wide">
+                    Role
+                  </label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div
+                      className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-300
+                        ${formData.role === 'patient'
+                          ? 'border-[#56E0A0] bg-[#56E0A0]/5 shadow-lg'
+                          : 'border-gray-200 hover:border-[#56E0A0]/50'}`}
+                      onClick={() => setFormData(prev => ({ ...prev, role: 'patient' }))}
+                    >
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-[#56E0A0]/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                          <MdPerson className="w-6 h-6 text-[#56E0A0]" />
+                        </div>
+                        <h4 className="font-semibold text-gray-900">Patient</h4>
+                        <p className="text-sm text-gray-600">Access AI health assistance</p>
+                      </div>
+                    </div>
+
+                    <div
+                      className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-300
+                        ${formData.role === 'doctor'
+                          ? 'border-[#56E0A0] bg-[#56E0A0]/5 shadow-lg'
+                          : 'border-gray-200 hover:border-[#56E0A0]/50'}`}
+                      onClick={() => setFormData(prev => ({ ...prev, role: 'doctor' }))}
+                    >
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-[#56E0A0]/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                          <MdVerifiedUser className="w-6 h-6 text-[#56E0A0]" />
+                        </div>
+                        <h4 className="font-semibold text-gray-900">Healthcare Professional</h4>
+                        <p className="text-sm text-gray-600">Provide AI-enhanced care</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* <div>
-              <label className="text-gray-700 font-medium block mb-2">Medical Specialization</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                  </svg>
+            {/* Step 3: Verification */}
+            {currentStep === 3 && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-[#56E0A0]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <MdCheck className="w-8 h-8 text-[#56E0A0]" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Almost Done!</h3>
+                  <p className="text-gray-600">Please review and accept our terms to complete your registration.</p>
                 </div>
-                <select
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
-                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
-                           transition-all text-gray-900"
-                  onChange={(e) => setFormData({...formData, specialization: e.target.value})}
+
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <input
+                      type="checkbox"
+                      name="termsAccepted"
+                      checked={formData.termsAccepted}
+                      onChange={handleInputChange}
+                      className="mt-1 w-5 h-5 text-[#56E0A0] border-2 border-gray-300 rounded
+                               focus:ring-[#56E0A0] focus:ring-2"
+                      required
+                    />
+                    <div>
+                      <label className="text-sm font-medium text-gray-900">
+                        Terms of Service & Privacy Policy *
+                      </label>
+                      <p className="text-sm text-gray-600">
+                        I agree to the Terms of Service and Privacy Policy
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <input
+                      type="checkbox"
+                      name="marketingConsent"
+                      checked={formData.marketingConsent}
+                      onChange={handleInputChange}
+                      className="mt-1 w-5 h-5 text-[#56E0A0] border-2 border-gray-300 rounded
+                               focus:ring-[#56E0A0] focus:ring-2"
+                    />
+                    <div>
+                      <label className="text-sm font-medium text-gray-900">
+                        Marketing Communications
+                      </label>
+                      <p className="text-sm text-gray-600">
+                        I would like to receive updates about new features and services (optional)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#F8F9FF] border border-[#DDE1EC] rounded-xl p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">What happens next?</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Email verification will be sent to your registered email</li>
+                    <li>• You can start using basic features immediately</li>
+                    <li>• Complete your profile for full access</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-between pt-6">
+              <button
+                type="button"
+                onClick={prevStep}
+                disabled={currentStep === 1}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all
+                  ${currentStep === 1
+                    ? 'text-gray-400 cursor-not-allowed'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}
+              >
+                <MdArrowBack className="w-5 h-5" />
+                Previous
+              </button>
+
+              {currentStep < steps.length ? (
+                <button
+                  type="button"
+                  onClick={nextStep}
+                  className="flex items-center gap-2 px-6 py-3 bg-[#56E0A0] text-white rounded-xl
+                           font-medium hover:bg-[#56E0A0]/90 transition-all shadow-lg hover:shadow-xl"
                 >
-                  <option value="">Select Specialization</option>
-                  <option value="wound-care">Wound Care Specialist</option>
-                  <option value="surgeon">Surgeon</option>
-                  <option value="nurse">Nurse Practitioner</option>
-                  <option value="dermatologist">Dermatologist</option>
-                </select>
-              </div>
-            </div> */}
-
-            {/* <div>
-              <label className="text-gray-700 font-medium block mb-2">License Number</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
-                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
-                           transition-all text-gray-900"
-                  placeholder="License number"
-                  onChange={(e) => setFormData({...formData, licenseNumber: e.target.value})}
-                />
-              </div>
-            </div> */}
-
-            <div>
-              <label className="text-gray-700 font-medium block mb-2">Password</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                </div>
-                <input
-                  type="password"
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
-                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
-                           transition-all text-gray-900"
-                  placeholder="••••••••"
-                  name='password'
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="text-gray-700 font-medium block mb-2">Gender</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <select
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
-                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
-                           transition-all text-gray-900"
-
-                  name='gender'
+                  Next
+                  <MdArrowForward className="w-5 h-5" />
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={isLoading || !formData.termsAccepted}
+                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#56E0A0] to-[#4ECDC4]
+                           text-white rounded-xl font-medium hover:shadow-xl
+                           focus:outline-none focus:ring-4 focus:ring-[#56E0A0]/30
+                           transform transition-all duration-300 hover:scale-[1.02]
+                           disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none
+                           relative overflow-hidden shadow-lg"
                 >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
+                  <span className="relative z-10 flex items-center">
+                    {isLoading ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                        Creating Account...
+                      </>
+                    ) : (
+                      <>
+                        Complete Registration
+                        <MdCheck className="ml-2 w-5 h-5" />
+                      </>
+                    )}
+                  </span>
+                </button>
+              )}
             </div>
-
-            <div>
-              <label className="text-gray-700 font-medium block mb-2">Role</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <select
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
-                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
-                           transition-all text-gray-900"
-
-                  name='role'
-                >
-                  <option value="">Select role</option>
-                  <option value="patient">Patient</option>
-                  <option value="doctor">Doctor</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label className="text-gray-700 font-medium block mb-2">Date of Birth</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <input
-                  type="date"
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
-                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
-                           transition-all text-gray-900"
-
-                  name='dateOfBirth'
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="text-gray-700 font-medium block mb-2">Phone Number</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                </div>
-                <input
-                  type="tel"
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 
-                           bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 
-                           transition-all text-gray-900"
-                  placeholder="(123) 456-7890"
-                  name='phone'
-                />
-              </div>
-            </div>
-
-            <div className="flex items-start">
-              <div className="flex items-center h-5">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 border-2 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
-
-
-                  name="consent"
-                />
-              </div>
-              <label className="ml-2 text-sm text-gray-600">
-                I consent to the processing of my personal data and agree to the terms of service and privacy policy
-              </label>
-            </div>
-            {state?.error && <p className="text-red-500">{state.error}</p>}
-            {state?.success && <p className="text-green-500">{state.success}</p>}
-
-            <button
-              type="submit"
-              className="w-full p-4 bg-gradient-to-r from-blue-600 to-cyan-500 
-                       text-white rounded-xl font-medium text-lg
-                       hover:from-blue-700 hover:to-cyan-600
-                       focus:outline-none focus:ring-4 focus:ring-blue-100
-                       transform transition-all duration-200 hover:scale-[1.01]
-                       shadow-xl"
-            >
-              Create Account
-            </button>
           </form>
 
-          <p className="text-center mt-6 text-gray-600">
-            Already have an account?{' '}
-            <Link href="/auth/login" className="text-blue-600 hover:text-blue-700 font-medium">
-              Sign in
-            </Link>
-          </p>
+          {/* Enhanced Footer */}
+          <div className="mt-8 text-center space-y-4">
+            <p className="text-gray-600">
+              Already have an account?{' '}
+              <Link
+                href="/auth/login"
+                className="text-[#56E0A0] hover:text-[#4ECDC4] font-semibold transition-colors duration-200
+                         hover:underline decoration-2 underline-offset-2"
+              >
+                Sign in
+              </Link>
+            </p>
+
+            <div className="flex items-center justify-center space-x-6 pt-4 border-t border-gray-100">
+              <Link
+                href="/local/privacy"
+                className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/local/terms"
+                className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                Terms of Service
+              </Link>
+              <Link
+                href="/local/support"
+                className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                Support
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
