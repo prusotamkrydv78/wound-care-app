@@ -20,23 +20,23 @@ export default function PatientRegistrationPage() {
     confirmPassword: '',
     gender: '',
     dateOfBirth: '',
-    
+
     // Contact Info
     address: '',
     city: '',
     state: '',
     zipCode: '',
-    
+
     // Emergency Contact
     emergencyContactName: '',
     emergencyContactPhone: '',
     emergencyContactRelation: '',
-    
+
     // Medical Info (Optional)
     medicalConditions: '',
     allergies: '',
     currentMedications: '',
-    
+
     // Consent
     termsConsent: false,
     hipaaConsent: false,
@@ -113,7 +113,7 @@ export default function PatientRegistrationPage() {
 
       // Redirect to OTP verification
       router.push(`/auth/otp-verification?email=${encodeURIComponent(formData.email)}&type=registration`);
-      
+
     } catch (error) {
       console.error('Registration error:', error);
       setError(error.message || 'An error occurred during registration');
@@ -127,8 +127,8 @@ export default function PatientRegistrationPage() {
       {steps.map((step, index) => (
         <div key={step.id} className="flex items-center">
           <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 
-            ${currentStep >= step.id 
-              ? 'bg-[#56E0A0] border-[#56E0A0] text-white' 
+            ${currentStep >= step.id
+              ? 'bg-[#56E0A0] border-[#56E0A0] text-white'
               : 'border-[#DDE1EC] text-gray-400'}`}>
             {currentStep > step.id ? (
               <MdCheck className="w-5 h-5" />
@@ -148,7 +148,7 @@ export default function PatientRegistrationPage() {
   const renderBasicInfo = () => (
     <div className="space-y-4">
       <h3 className="text-xl font-semibold text-gray-900 mb-4">Basic Information</h3>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
@@ -164,7 +164,7 @@ export default function PatientRegistrationPage() {
             required
           />
         </div>
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
           <input
@@ -179,7 +179,7 @@ export default function PatientRegistrationPage() {
             required
           />
         </div>
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
           <input
@@ -194,7 +194,7 @@ export default function PatientRegistrationPage() {
             required
           />
         </div>
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Date of Birth *</label>
           <input
@@ -208,7 +208,7 @@ export default function PatientRegistrationPage() {
             required
           />
         </div>
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Gender *</label>
           <select
@@ -228,7 +228,7 @@ export default function PatientRegistrationPage() {
           </select>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Password *</label>
@@ -244,7 +244,7 @@ export default function PatientRegistrationPage() {
             required
           />
         </div>
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password *</label>
           <input
@@ -262,11 +262,233 @@ export default function PatientRegistrationPage() {
       </div>
     </div>
   );
+  const renderContactInfo = () => (
+    <div className="space-y-4">
+      <h3 className="text-xl font-semibold text-gray-900 mb-4">Contact Information</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Address *</label>
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 rounded-xl border-2 border-[#DDE1EC] 
+                     bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10 
+                     transition-all text-gray-900"
+            placeholder="123 Main St, Apt 4B"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">City *</label>
+          <input
+            type="text"
+            name="city"
+            value={formData.city}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 rounded-xl border-2 border-[#DDE1EC] 
+                     bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10 
+                     transition-all text-gray-900"
+            placeholder="City"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">State *</label>
+          <input
+            type="text"
+            name="state"
+            value={formData.state}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 rounded-xl border-2 border-[#DDE1EC] 
+                     bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10 
+                     transition-all text-gray-900"
+            placeholder="State"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">ZIP Code *</label>
+          <input
+            type="text"
+            name="zipCode"
+            value={formData.zipCode}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 rounded-xl border-2 border-[#DDE1EC] 
+                     bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10 
+                     transition-all text-gray-900"
+            placeholder="ZIP Code"
+            required
+          />
+        </div>
+      </div>
+
+      <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Emergency Contact</h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Name *</label>
+          <input
+            type="text"
+            name="emergencyContactName"
+            value={formData.emergencyContactName}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 rounded-xl border-2 border-[#DDE1EC] 
+                     bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10 
+                     transition-all text-gray-900"
+            placeholder="Jane Doe"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
+          <input
+            type="tel"
+            name="emergencyContactPhone"
+            value={formData.emergencyContactPhone}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 rounded-xl border-2 border-[#DDE1EC] 
+                     bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10 
+                     transition-all text-gray-900"
+            placeholder="(123) 456-7890"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Relation *</label>
+          <input
+            type="text"
+            name="emergencyContactRelation"
+            value={formData.emergencyContactRelation}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 rounded-xl border-2 border-[#DDE1EC] 
+                     bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10 
+                     transition-all text-gray-900"
+            placeholder="Relationship"
+            required
+          />
+        </div>
+      </div>
+    </div>
+  );
+  const renderMedicalInfo = () => (
+    <div className="space-y-4">
+      <h3 className="text-xl font-semibold text-gray-900 mb-4">Medical Information <span className="text-gray-500 text-base font-normal">(Optional)</span></h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Medical Conditions
+            <span className="block text-xs text-gray-400 font-normal mt-1">
+              List any chronic or relevant conditions (e.g., diabetes, hypertension)
+            </span>
+          </label>
+          <textarea
+            name="medicalConditions"
+            value={formData.medicalConditions}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 rounded-xl border-2 border-[#DDE1EC] bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10 transition-all text-gray-900 resize-none"
+            placeholder="e.g., Diabetes, Hypertension"
+            rows={3}
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Allergies
+            <span className="block text-xs text-gray-400 font-normal mt-1">
+              Include medication, food, or environmental allergies
+            </span>
+          </label>
+          <textarea
+            name="allergies"
+            value={formData.allergies}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 rounded-xl border-2 border-[#DDE1EC] bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10 transition-all text-gray-900 resize-none"
+            placeholder="e.g., Penicillin, Peanuts"
+            rows={3}
+          />
+        </div>
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Current Medications
+          <span className="block text-xs text-gray-400 font-normal mt-1">
+            List any medications you are currently taking
+          </span>
+        </label>
+        <textarea
+          name="currentMedications"
+          value={formData.currentMedications}
+          onChange={handleInputChange}
+          className="w-full px-4 py-3 rounded-xl border-2 border-[#DDE1EC] bg-white focus:border-[#56E0A0] focus:ring-4 focus:ring-[#56E0A0]/10 transition-all text-gray-900 resize-none"
+          placeholder="e.g., Metformin, Lisinopril"
+          rows={3}
+        />
+      </div>
+      <div className="text-xs text-gray-400 mt-2">
+        This information helps your care team provide safer, more personalized care. You may leave these fields blank if you prefer.
+      </div>
+    </div>
+  );
+
+  const renderConsent = () => (
+    <div className="space-y-6">
+      <h3 className="text-xl font-semibold text-gray-900 mb-4">Consent & Agreements</h3>
+      <div className="space-y-4">
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            name="termsConsent"
+            checked={formData.termsConsent}
+            onChange={handleInputChange}
+            className="mt-1 accent-[#56E0A0] w-5 h-5 rounded border-2 border-[#DDE1EC] focus:ring-[#56E0A0]"
+            required
+          />
+          <span className="text-gray-700 text-sm">
+            I agree to the{' '}
+            <Link href="/terms" className="text-[#56E0A0] underline hover:text-[#45B7D1]" target="_blank">
+              Terms of Service
+            </Link>
+            , which outline my rights and responsibilities as a user of AssistIQ, including acceptable use, account security, and limitations of liability.
+          </span>
+        </label>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            name="hipaaConsent"
+            checked={formData.hipaaConsent}
+            onChange={handleInputChange}
+            className="mt-1 accent-[#56E0A0] w-5 h-5 rounded border-2 border-[#DDE1EC] focus:ring-[#56E0A0]"
+            required
+          />
+          <span className="text-gray-700 text-sm">
+            I consent to the{' '}
+            <Link href="/privacy" className="text-[#56E0A0] underline hover:text-[#45B7D1]" target="_blank">
+              HIPAA Privacy Policy
+            </Link>
+            , allowing AssistIQ to securely collect, store, and process my health information in compliance with federal privacy regulations.
+          </span>
+        </label>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            name="marketingConsent"
+            checked={formData.marketingConsent}
+            onChange={handleInputChange}
+            className="mt-1 accent-[#56E0A0] w-5 h-5 rounded border-2 border-[#DDE1EC] focus:ring-[#56E0A0]"
+          />
+          <span className="text-gray-700 text-sm">
+            I would like to receive updates, newsletters, and marketing communications about new features and health tips (optional).
+          </span>
+        </label>
+      </div>
+
+    </div>
+  );
 
   return (
     <div className="min-h-screen flex overflow-hidden">
       {/* Left Section - Patient Theme */}
-      <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 bg-gradient-to-br from-[#56E0A0] via-[#4ECDC4] to-[#45B7D1] p-8 fixed h-screen">
+      <div className="hidden lg:flex lg:w-1/2  bg-gradient-to-br from-[#56E0A0] via-[#4ECDC4] to-[#45B7D1] p-8 fixed h-screen">
         <div className="relative z-10 w-full flex flex-col justify-center max-w-lg mx-auto text-white">
           {/* Logo */}
           <div className="flex items-center mb-8">
@@ -287,7 +509,7 @@ export default function PatientRegistrationPage() {
               <span className="text-white/90">Starts Here</span>
             </h2>
             <p className="text-white/80 text-lg leading-relaxed mb-8">
-              Get personalized AI health insights, track your wellness, and connect 
+              Get personalized AI health insights, track your wellness, and connect
               with healthcare professionals in a secure, HIPAA-compliant platform.
             </p>
           </div>
@@ -328,7 +550,7 @@ export default function PatientRegistrationPage() {
       </div>
 
       {/* Right Section - Registration Form */}
-      <div className="w-full lg:w-1/2 lg:ml-[50%] xl:ml-[60%] overflow-y-auto min-h-screen bg-white">
+      <div className="w-full lg:w-1/2 absolute right-2 pt-5  overflow-y-auto min-h-screen bg-white">
         <div className="w-full max-w-2xl mx-auto p-6">
           <div className="flex items-center justify-between mb-8">
             <Link
@@ -353,22 +575,24 @@ export default function PatientRegistrationPage() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {currentStep === 1 && renderBasicInfo()}
-            {/* Additional steps would be implemented here */}
-            
+            {currentStep === 2 && renderContactInfo()}
+            {currentStep === 3 && renderMedicalInfo()}
+            {currentStep === 4 && renderConsent()}
+
             <div className="flex justify-between pt-6">
               <button
                 type="button"
                 onClick={prevStep}
                 disabled={currentStep === 1}
                 className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all
-                  ${currentStep === 1 
-                    ? 'text-gray-400 cursor-not-allowed' 
+                  ${currentStep === 1
+                    ? 'text-gray-400 cursor-not-allowed'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}
               >
                 <MdArrowBack className="w-5 h-5" />
                 Previous
               </button>
-              
+
               {currentStep < steps.length ? (
                 <button
                   type="button"
