@@ -25,6 +25,11 @@ const baseFields = {
       timestamp: { type: Date },
     },
   },
+  role: {
+    type: String,
+    enum: ["patient", "doctor", "admin"],
+    default: "patient",
+  },
 
   isVerify: { type: Boolean, default: false },
   isEmailVerified: { type: Boolean, default: false },

@@ -5,6 +5,7 @@ import PatientModel from "@/models/user/patient.model";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 import DoctorModel from "@/models/user/doctor.model";
+import bcrypt from "bcrypt";
 
 const RegisterPatient = async (prevFormData, formData) => {
   await connectDb();
@@ -60,6 +61,7 @@ const RegisterPatient = async (prevFormData, formData) => {
     },
   };
   try {
+    patientData.password = await bcrypt.hash(patientData.password, 10);
     await PatientModel.create(patientData);
     // redirect("/auth/otp-verification");
     redirect("/auth/login");
@@ -129,9 +131,11 @@ const RegisterDoctor = async (prevState, formData) => {
     isEmailVerified: false,
     isPhoneVerified: false,
     accountStatus: "active",
+    role:"doctor"
   };
   console.log("docot creating", doctorData);
-  try {
+  try { 
+    doctorData.password = await bcrypt.hash(doctorData.password, 10);
     const newuser = await DoctorModel.create(doctorData);
     console.log(newuser);
     // redirect("/auth/otp-verification");

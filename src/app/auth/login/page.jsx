@@ -1,37 +1,25 @@
-'use client';
-import { useActionState, useState } from 'react';
-import Link from 'next/link';
-import { loginUser } from '@/actions/auth/login.auth';
-import { MdVisibility, MdVisibilityOff, MdEmail, MdLock, MdArrowForward, MdSecurity, MdSpeed, MdVerifiedUser } from 'react-icons/md';
+"use client";
+import { useActionState, useState } from "react";
+import Link from "next/link";
+import { loginUser } from "@/actions/auth/login.auth";
+import {
+  MdVisibility,
+  MdVisibilityOff,
+  MdEmail,
+  MdLock,
+  MdArrowForward,
+  MdSecurity,
+  MdSpeed,
+  MdVerifiedUser,
+} from "react-icons/md";
 
 export default function Login() {
-  const [state, formAction] = useActionState(loginUser);
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    rememberMe: false
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    setIsLoading(true);
-    // Simulate loading state for demo
-    setTimeout(() => setIsLoading(false), 1500);
-  };
-
+  const [loginFormState, loginFormAction, isLoginFormPending] = useActionState(loginUser);
+  const [showPassword, setShowPassword] = useState(false); 
   return (
     <div className="min-h-screen flex overflow-hidden bg-gradient-to-br from-gray-50 to-white">
       {/* Left Section - Enhanced AssistIQ Theme */}
-      <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 bg-gradient-to-br from-[#6B7AFF] via-[#8B6DFF] to-[#5698FF] p-8 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 bg-gradient-to-br from-[#6B7AFF] via-[#8B6DFF] to-[#5698FF] px-8 py-4 relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
@@ -41,92 +29,126 @@ export default function Login() {
 
         <div className="relative z-10 w-full flex flex-col justify-center max-w-lg mx-auto text-white">
           {/* Logo with enhanced animation */}
-          <div className="flex items-center space-x-4 mb-12 group">
-            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center
+          <div className="flex items-center space-x-4 mb-6 group">
+            <div
+              className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center
                            shadow-2xl border border-white/20 transform group-hover:scale-105 transition-all duration-500
-                           group-hover:rotate-3 group-hover:shadow-3xl">
+                           group-hover:rotate-3 group-hover:shadow-3xl"
+            >
               <span className="text-white text-3xl font-bold">A</span>
             </div>
             <div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
                 AssistIQ
               </h1>
-              <p className="text-white/70 text-lg font-medium">AI-Powered Professional Platform</p>
+              <p className="text-white/70 text-lg font-medium">
+                AI-Powered Professional Platform
+              </p>
             </div>
           </div>
 
           {/* Hero Content with enhanced styling */}
-          <div className="space-y-8">
+          <div className="space-y-4">
             <div>
-              <h2 className="text-5xl font-bold mb-6 leading-tight">
+              <h2 className="text-4xl font-bold mb-4 leading-tight">
                 Welcome Back to the
                 <span className="block bg-gradient-to-r from-white via-white/95 to-white/90 bg-clip-text text-transparent">
                   Future of Work
                 </span>
               </h2>
-              <p className="text-white/80 text-xl leading-relaxed">
-                Continue your journey with AI-powered tools designed to enhance productivity
-                and streamline professional workflows.
+              <p className="text-white/80 text-md leading-relaxed">
+                Continue your journey with AI-powered tools designed to enhance
+                productivity and streamline professional workflows.
               </p>
             </div>
 
             {/* Enhanced Features Grid */}
-            <div className="grid grid-cols-1 gap-6 mt-12">
-              <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20
-                             hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+            <div className="grid grid-cols-1 gap-3 mt-3">
+              <div
+                className="group bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/20
+                             hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              >
                 <div className="flex items-center space-x-4 mb-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center
-                                 group-hover:scale-110 transition-transform duration-300">
+                  <div
+                    className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center
+                                 group-hover:scale-110 transition-transform duration-300"
+                  >
                     <MdSecurity className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-white font-bold text-lg">Enterprise Security</h3>
-                    <p className="text-white/70 text-sm">Bank-grade encryption & compliance</p>
+                    <h3 className="text-white font-bold text-lg">
+                      Enterprise Security
+                    </h3>
+                    <p className="text-white/70 text-sm">
+                      Bank-grade encryption & compliance
+                    </p>
                   </div>
                 </div>
               </div>
 
-              <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20
-                             hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+              <div
+                className="group bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20
+                             hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              >
                 <div className="flex items-center space-x-4 mb-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center
-                                 group-hover:scale-110 transition-transform duration-300">
+                  <div
+                    className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center
+                                 group-hover:scale-110 transition-transform duration-300"
+                  >
                     <MdSpeed className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-white font-bold text-lg">Lightning Fast</h3>
-                    <p className="text-white/70 text-sm">AI responses in milliseconds</p>
+                    <h3 className="text-white font-bold text-lg">
+                      Lightning Fast
+                    </h3>
+                    <p className="text-white/70 text-sm">
+                      AI responses in milliseconds
+                    </p>
                   </div>
                 </div>
               </div>
 
-              <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20
-                             hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+              <div
+                className="group bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20
+                             hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              >
                 <div className="flex items-center space-x-4 mb-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center
-                                 group-hover:scale-110 transition-transform duration-300">
+                  <div
+                    className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center
+                                 group-hover:scale-110 transition-transform duration-300"
+                  >
                     <MdVerifiedUser className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-white font-bold text-lg">Trusted by 50K+</h3>
-                    <p className="text-white/70 text-sm">Professionals worldwide</p>
+                    <h3 className="text-white font-bold text-lg">
+                      Trusted by 50K+
+                    </h3>
+                    <p className="text-white/70 text-sm">
+                      Professionals worldwide
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Enhanced Statistics */}
-            <div className="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-white/20">
+            <div className="grid grid-cols-3 gap-3 mt-6 pt-8 border-t border-white/20">
               <div className="text-center group">
-                <div className="text-3xl font-bold text-white mb-1 group-hover:scale-110 transition-transform duration-300">99.9%</div>
+                <div className="text-3xl font-bold text-white mb-1 group-hover:scale-110 transition-transform duration-300">
+                  99.9%
+                </div>
                 <div className="text-white/70 text-sm">Uptime</div>
               </div>
               <div className="text-center group">
-                <div className="text-3xl font-bold text-white mb-1 group-hover:scale-110 transition-transform duration-300">24/7</div>
+                <div className="text-3xl font-bold text-white mb-1 group-hover:scale-110 transition-transform duration-300">
+                  24/7
+                </div>
                 <div className="text-white/70 text-sm">Support</div>
               </div>
               <div className="text-center group">
-                <div className="text-3xl font-bold text-white mb-1 group-hover:scale-110 transition-transform duration-300">50K+</div>
+                <div className="text-3xl font-bold text-white mb-1 group-hover:scale-110 transition-transform duration-300">
+                  50K+
+                </div>
                 <div className="text-white/70 text-sm">Users</div>
               </div>
             </div>
@@ -144,22 +166,33 @@ export default function Login() {
         <div className="w-full max-w-md relative z-10">
           {/* Enhanced Logo Section */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#6B7AFF] to-[#8B6DFF]
+            <div
+              className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#6B7AFF] to-[#8B6DFF]
                            rounded-2xl shadow-2xl mb-6 transform hover:scale-105 transition-all duration-300
-                           hover:shadow-3xl hover:rotate-3">
+                           hover:shadow-3xl hover:rotate-3"
+            >
               <span className="text-white text-2xl font-bold">A</span>
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-            <p className="text-gray-600 text-lg">Continue your AI-powered journey</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              Welcome Back
+            </h1>
+            <p className="text-gray-600 text-lg">
+              Continue your AI-powered journey
+            </p>
           </div>
 
           {/* Enhanced Form */}
-          <form action={formAction} onSubmit={handleSubmit} className="space-y-6">
-            {state?.error && (
+          <form
+            action={loginFormAction} 
+            className="space-y-6"
+          >
+            {/* {state?.error && (
               <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
-                <p className="text-red-600 text-sm font-medium">{state.error}</p>
+                <p className="text-red-600 text-sm font-medium">
+                  {state.error}
+                </p>
               </div>
-            )}
+            )} */}
 
             <div className="space-y-5">
               <div className="group">
@@ -167,15 +200,15 @@ export default function Login() {
                   Email Address
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none
-                                 group-focus-within:text-[#6B7AFF] transition-colors duration-200">
+                  <div
+                    className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none
+                                 group-focus-within:text-[#6B7AFF] transition-colors duration-200"
+                  >
                     <MdEmail className="h-5 w-5 text-gray-400 group-focus-within:text-[#6B7AFF]" />
                   </div>
                   <input
                     type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
+                    name="email" 
                     className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-gray-200
                              bg-white focus:border-[#6B7AFF] focus:ring-4 focus:ring-[#6B7AFF]/10
                              transition-all duration-300 text-gray-900 placeholder-gray-400
@@ -191,15 +224,15 @@ export default function Login() {
                   Password
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none
-                                 group-focus-within:text-[#6B7AFF] transition-colors duration-200">
+                  <div
+                    className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none
+                                 group-focus-within:text-[#6B7AFF] transition-colors duration-200"
+                  >
                     <MdLock className="h-5 w-5 text-gray-400 group-focus-within:text-[#6B7AFF]" />
                   </div>
                   <input
                     type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
+                    name="password" 
                     className="w-full pl-12 pr-12 py-4 rounded-xl border-2 border-gray-200
                              bg-white focus:border-[#6B7AFF] focus:ring-4 focus:ring-[#6B7AFF]/10
                              transition-all duration-300 text-gray-900 placeholder-gray-400
@@ -228,9 +261,7 @@ export default function Login() {
               <label className="flex items-center group cursor-pointer">
                 <input
                   type="checkbox"
-                  name="rememberMe"
-                  checked={formData.rememberMe}
-                  onChange={handleInputChange}
+                  name="rememberMe" 
                   className="w-5 h-5 rounded-lg border-2 border-gray-300 text-[#6B7AFF]
                            focus:ring-4 focus:ring-[#6B7AFF]/20 transition-all duration-200
                            group-hover:border-[#6B7AFF]"
@@ -251,7 +282,7 @@ export default function Login() {
             {/* Enhanced Submit Button */}
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoginFormPending}
               className="group w-full p-4 bg-gradient-to-r from-[#6B7AFF] to-[#8B6DFF] text-white
                        rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl
                        focus:outline-none focus:ring-4 focus:ring-[#6B7AFF]/30
@@ -260,7 +291,7 @@ export default function Login() {
                        relative overflow-hidden"
             >
               <span className="relative z-10 flex items-center justify-center">
-                {isLoading ? (
+                {isLoginFormPending ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-3"></div>
                     Signing in...
@@ -272,15 +303,17 @@ export default function Login() {
                   </>
                 )}
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#5A6AFF] to-[#7B5DFF] opacity-0
-                             group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div
+                className="absolute inset-0 bg-gradient-to-r from-[#5A6AFF] to-[#7B5DFF] opacity-0
+                             group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
             </button>
           </form>
 
           {/* Enhanced Footer */}
           <div className="mt-8 text-center space-y-4">
             <p className="text-gray-600">
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <Link
                 href="/auth/register"
                 className="text-[#6B7AFF] hover:text-[#5A6AFF] font-semibold transition-colors duration-200

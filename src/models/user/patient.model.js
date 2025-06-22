@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const { Schema } = mongoose;
-import baseFields from '../user.model';
+import baseFields from "../user.model";
 
 const patientProfileSchema = {
   address: String,
@@ -10,26 +10,30 @@ const patientProfileSchema = {
   emergencyContact: {
     name: String,
     phone: String,
-    relation: String
+    relation: String,
   },
   insurance: {
     provider: String,
     policyNumber: String,
-    groupNumber: String
+    groupNumber: String,
   },
   medical: {
     conditions: String,
     medications: String,
     allergies: String,
     primaryCarePhysician: String,
-    preferredHospital: String
-  }
+    preferredHospital: String,
+  },
 };
-const PatientSchema = new Schema({
-  ...baseFields,
-  ...patientProfileSchema
-}, { timestamps: true });
+const PatientSchema = new Schema(
+  {
+    ...baseFields,
+    ...patientProfileSchema,
+  },
+  { timestamps: true }
+);
 
-
-const PatientModel = mongoose.models.Patient || mongoose.model('Patient', PatientSchema, 'patients');
+const PatientModel =
+  mongoose.models.Patient ||
+  mongoose.model("Patient", PatientSchema, "patients");
 export default PatientModel;
