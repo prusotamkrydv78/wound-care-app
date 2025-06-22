@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 import baseFields from '../user.model';
 
-const patientProfileSchema = new Schema({
+const patientProfileSchema = {
   address: String,
   city: String,
   state: String,
@@ -24,10 +24,10 @@ const patientProfileSchema = new Schema({
     primaryCarePhysician: String,
     preferredHospital: String
   }
-}, { _id: false });
+};
 const PatientSchema = new Schema({
   ...baseFields,
-  patientProfile: patientProfileSchema
+  ...patientProfileSchema
 }, { timestamps: true });
 
 

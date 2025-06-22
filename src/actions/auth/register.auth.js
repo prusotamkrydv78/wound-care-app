@@ -1,61 +1,71 @@
+"use server";
 
-"use server"
-import UserModel from "@/models/user.model";
 import connectDb from "@/db/connectDb";
-import bcrypt from 'bcrypt';
-import { SendOTP } from "@/utils/OTPSender";
-import { redirect } from "next/navigation";
-import jwt from "jsonwebtoken";
+import PatientModel from "@/models/user/patient.model";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { redirect } from "next/navigation";
 
-const RegisterUser = async (previousState, formData) => {
-    await connectDb();
+const RegisterPatient = async (prevFormData, formData) => {
+  await connectDb();
+  const patientData = {
+    // Basic Information
+    fullName: formData.get("fullName"),
+    email: formData.get("email"),
+    phone: formData.get("phone"),
+    password: formData.get("password"),
+    gender: formData.get("gender"),
+    dateOfBirth: formData.get("dateOfBirth"),
 
-    const userData = {
-        fullName: formData.get("fullName"),
-        email: formData.get("email"),
-        phone: formData.get("phone"),
-        password: formData.get("password"),
-        gender: formData.get("gender"),
-        dateOfBirth: formData.get("dateOfBirth"),
-        consent: formData.get("consent") === "on",
-        role:formData.get("role")
-    };
+    // Contact Information
+    address: formData.get("address"),
+    city: formData.get("city"),
+    state: formData.get("state"),
+    zipCode: formData.get("zipCode"),
 
-    if (!userData.consent) {
-        return { error: 'You must agree to the terms, cutie 🥺❤️' };
-    }
+    // Emergency Contact
+    emergencyContact: {
+      name: formData.get("emergencyContactName"),
+      phone: formData.get("emergencyContactPhone"),
+      relation: formData.get("emergencyContactRelation"),
+    },
 
-    try {
-        const OTP = Math.floor(100000 + Math.random() * 900000).toString();
+    // Insurance Information
+    insurance: {
+      provider: formData.get("insuranceProvider"),
+      policyNumber: formData.get("insurancePolicyNumber"),
+      groupNumber: formData.get("insuranceGroupNumber"),
+    },
 
-        // 💌 1. Send OTP Email
-        await SendOTP(userData.email, OTP);
+    // Medical Information
+    medical: {
+      conditions: formData.get("medicalConditions"),
+      medications: formData.get("currentMedications"),
+      allergies: formData.get("allergies"),
+      primaryCarePhysician: formData.get("primaryCarePhysician"),
+      preferredHospital: formData.get("preferredHospital"),
+    },
 
-        // 🔐 2. Hash Password and OTP
-        const hashedPassword = await bcrypt.hash(userData.password, 10);
-        const hashedOTP = await bcrypt.hash(OTP, 10);
-        userData.password = hashedPassword;
-        userData.otp = hashedOTP;
-
-        // 💾 3. Save to DB
-        await UserModel.create(userData);
-
-        // 🛡️ 4. Generate Secure Token
-        const token = jwt.sign(
-            { email: userData.email },
-            process.env.JWT_SECRET_KEY,
-            { expiresIn: '5m' }
-        );
-
-        // 🚪 5. Redirect (must be LAST)
-        redirect(`/auth/otp-verification?token=${token}&process=register`);
-
-    } catch (error) {
-        if (isRedirectError(error)) throw error;
-        console.error('Error during registration, my baby:', error);
-        return { error: 'Something went wrong, love 😢 Please try again.' };
-    }
+    // Consent & Agreements
+    consents: {
+      terms: {
+        accepted: formData.get("termsConsent") === "on",
+      },
+      hipaa: {
+        accepted: formData.get("hipaaConsent") === "on",
+      },
+      marketing: {
+        accepted: formData.get("marketingConsent") === "on",
+      },
+    },
+  };
+  try {
+    await PatientModel.create(patientData);
+    redirect("/auth/otp-verification");
+  } catch (error) { 
+    if(isRedirectError(error)) throw error
+    prevFormData.set("error", "Something went wrong, darling 😢 Please try again.");
+    console.log(error);
+  }
 };
 
-export default RegisterUser;
+export { RegisterPatient };
