@@ -543,11 +543,19 @@ export default function DoctorRegistrationPage() {
           )}
 
           {renderStepIndicator()}
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {currentStep === 1 && renderBasicInfo()}
-            {currentStep === 2 && renderProfessionalInfo()}
-            {currentStep === 3 && renderVerificationStep()}
+          <form action={registerFormAction} className="space-y-6">
+            <div className={currentStep === 1 ? "block" : "hidden"}>
+              {renderProfessionalInfo()}
+            </div>
+            <div className={currentStep === 2 ? "block" : "hidden"}>
+              {renderContactInfo()}
+            </div>
+            <div className={currentStep === 3 ? "block" : "hidden"}>
+              {renderMedicalInfo()}
+            </div>
+            <div className={currentStep === 4 ? "block" : "hidden"}>
+              {renderConsent()}
+            </div>
             {/* Verification step would be implemented here */}
 
             <div className="flex justify-between pt-6">

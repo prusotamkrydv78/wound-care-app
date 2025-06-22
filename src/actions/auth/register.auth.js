@@ -68,4 +68,17 @@ const RegisterPatient = async (prevFormData, formData) => {
   }
 };
 
-export { RegisterPatient };
+const RegisterDoctor = async (prevState, formData) => {
+  await connectDb();
+  try {
+    await DoctorModel.create(doctorData);
+    redirect("/auth/otp-verification");
+  } catch (error) {
+    if (isRedirectError(error)) throw error;
+    prevState.set("error", "Something went wrong, darling 😢 Please try again.");
+    console.log(error);
+  }
+};
+
+export { RegisterPatient , RegisterDoctor};
+  
