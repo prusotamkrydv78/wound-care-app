@@ -43,6 +43,9 @@ export const loginUser = async (prevState, formData) => {
     session.email = isUserExists.email;
     session.role = isUserExists.role;
     session.isVerify = isUserExists.isVerify;
+    session.phone = isUserExists.phone;
+    session.gender = isUserExists.gender;
+    session.address = isUserExists.address;
     session.isLogin = true;
     await session.save();
 

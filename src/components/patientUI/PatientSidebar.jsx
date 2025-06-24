@@ -7,7 +7,8 @@ import { RiFirstAidKitLine, RiMessage2Line, RiBookReadLine, RiUserLine, RiHistor
 import { IoSettingsOutline, IoLogOutOutline, IoShieldCheckmarkOutline } from 'react-icons/io5';
 import { useSidebar } from '@/context/SidebarContext';
 
-const PatientSidebar = () => {
+const PatientSidebar = ({session}) => {
+  console.log(session)
   const pathname = usePathname();
   const { isPatientSidebarOpen, setIsPatientSidebarOpen } = useSidebar();
   const [openMenus, setOpenMenus] = useState({});
@@ -163,8 +164,8 @@ const PatientSidebar = () => {
                 <RiUserLine className="w-4 h-4 text-[#6B7AFF]" />
               </div>
               <Link href='/patient/profile' className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-[#1C243C] truncate">John Smith</p>
-                <p className="text-xs text-[#8F96AA] truncate">Patient</p>
+                <p className="text-sm font-medium text-[#1C243C] truncate">{session.fullName}</p>
+                <p className="text-xs text-[#8F96AA] truncate">{session.role}</p>
               </Link>
               <Link href="/patient/settings">
                 <IoSettingsOutline className="w-4 h-4 text-[#8F96AA] hover:text-[#6B7AFF]" />

@@ -1,5 +1,5 @@
 import { RiFirstAidKitLine, RiTeamLine, RiStethoscopeLine, RiUserHeartLine, RiShieldCheckLine, RiTimeLine } from 'react-icons/ri';
-import { MdAnalytics, MdOutlineSupport, MdSecurity, MdSpeed, MdCheck, MdArrowForward } from 'react-icons/md';
+import { MdAnalytics, MdOutlineSupport, MdSecurity, MdSpeed, MdCheck, MdArrowForward, MdPlayArrow } from 'react-icons/md';
 import { HiOutlineChartBar, HiOutlineUsers, HiOutlineShieldCheck } from 'react-icons/hi';
 import Link from 'next/link';
 

@@ -1,4 +1,4 @@
-import { MdShield, MdPeople, MdTrendingUp, MdCheck, MdArrowForward } from 'react-icons/md';
+import { MdShield, MdPeople, MdTrendingUp, MdCheck, MdArrowForward, MdPlayArrow } from 'react-icons/md';
 import { RiFirstAidKitLine, RiTeamLine, RiStethoscopeLine, RiHeartPulseLine, RiAwardLine, RiUserHeartLine } from 'react-icons/ri';
 import { HiOutlineChartBar, HiOutlineUsers, HiOutlineShieldCheck } from 'react-icons/hi';
 import Image from 'next/image';
